@@ -4,7 +4,6 @@ The assignment tracking system for tech-savvy students.
 
 [![npm version](https://img.shields.io/npm/v/hoot-cli/latest?style=flat-square)](https://npmjs.org/package/hoot-cli "View this project on npm")
 
-
 [![Dependencies](https://img.shields.io/david/rishiosaur/hoot-cli?style=flat-square)](https://npmjs.org/package/hoot-cli "View this project on npm")
 
 ## Usage
@@ -36,3 +35,7 @@ To generate a subject file with `hoot.json`, run:
 `hoot subject <title>`
 
 Where `<title>` is the name of the subject.
+
+### Assignments
+
+Assignment generation is done using the `hoot assignment <title>` command, and templating is done by copying an assignment template in the `templates/` folder.
