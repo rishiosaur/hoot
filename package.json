@@ -1,14 +1,14 @@
 {
-  "name": "hoot",
+  "name": "hoot-cli",
   "version": "1.0.0",
-  "description": "",
+  "description": "An assignment managing system.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "rishiosaur",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^2.4.2",
     "commander": "^3.0.0",
