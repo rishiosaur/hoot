@@ -1,0 +1,56 @@
+import {
+  CodeSurferLayout,
+  CodeSurferColumnLayout,
+} from "code-surfer";
+import { Notes } from "mdx-deck"
+import Highlight from './hoot-components'
+import hoot from './hoot'
+import "prismjs/components/prism-swift"
+import MathJax from 'react-mathjax2'
+export const themes = [hoot]
+
+# Title goes <Highlight>here</Highlight>
+Your name here
+
+---
+
+# Code highlighting?
+
+---
+
+<CodeSurferLayout>
+
+```swift title="Function definition"
+func hello(_ a: String) -> Void{
+  print("hello, " + self.a)
+}
+```
+
+```swift 4 notes="hi"
+func hello(_ a: String) -> Void{
+  print("hello, " + self.a)
+}
+hello("hi")
+```
+
+```swift 1,5
+var hi: String
+func hello(_ a: String) -> Void{
+  print("hello, " + self.a)
+}
+hello(hi)
+```
+
+</CodeSurferLayout>
+
+---
+
+<MathJax.Context>
+<div>
+  This is an inline formula written in AsciiMath: 
+  <br/>
+  <MathJax.Node inline>{ 'ascii' }</MathJax.Node>
+</div>
+</MathJax.Context>
+
+---
