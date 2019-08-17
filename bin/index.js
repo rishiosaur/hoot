@@ -12,14 +12,10 @@ const { readdirSync, mkdirSync, writeFile, existsSync } = require("fs");
 const { copy } = require("fs-extra");
 const { resolve } = require("path");
 const { promisify } = require("util");
+const { getDirectory } = require("./util/getDirectory")
+const { verifyDirectory } = require("./util/verifyDirectory")
 const ncp = require("ncp");
-
 const copyTemplate = program;
-
-const getDirectories = source =>
-  readdirSync(source, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory())
-    .map(dirent => dirent.name);
 
 async function verifySchool() {
   try {
@@ -87,20 +83,15 @@ async function makeAssignment(name) {
     shell.echo("Sorry, this script requires git");
     shell.exit(1);
   }
-  let verification = await verifySchool();
-  let subjects = await getSubjects();
-  if (!subjects) {
+  let subjects = await getDirectory("");
+  subjects = subjects.filter(subject => subject != "other")
+  
+  if (subjects.length < 1) {
     console.log(
       chalk.red("ERROR ") +
         chalk.blue("You do not have subjects. Try running ") +
         chalk.green("hoot subject <title>")
     );
-    return;
-  }
-
-  if (!verification) {
-    console.log(chalk.red("ERROR: ") + chalk.blue("School not found"));
-    console.log(chalk.green("Try running ") + chalk.blue("hoot setup"));
     return;
   }
   console.log(
@@ -241,7 +232,7 @@ async function setupSchool() {
 }
 
 async function makeSubject(name) {
-  let verification = await verifySchool();
+  let verification = await verifyDirectory("")
   if (!verification) {
     console.log(chalk.red("ERROR: ") + chalk.blue("School not found"));
     console.log(chalk.green("Try running ") + chalk.blue("hoot setup"));
