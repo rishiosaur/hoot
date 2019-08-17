@@ -17,6 +17,7 @@ const { verifyCmd } = require("./util/verifyCmd")
 const ncp = require("ncp");
 
 const { makeAssignment }  = require("./commands/assignments/makeAssignment")
+const { makeSchool } = require("./commands/school/makeSchool")
 
 async function writeSubjectRC(subjectName, subjectType) {
   let string =
@@ -37,59 +38,59 @@ async function writeSubjectRC(subjectName, subjectType) {
   );
 }
 
-async function setupSchool() {
-  let verification = await verifyDirectory("", true)
-  if (verification) {
-    console.log(
-      chalk.red("ERROR: ") + chalk.blue("You already have a school folder.")
-    );
-    console.log(
-      chalk.green("Note: ") +
-        chalk.blue("hoot setup ") +
-        chalk.yellow("is a one-time command.")
-    );
-    shell.exit(1)
-  }
-  /*
-  create directory with name in current directory
-  */
-  console.log(
-    figlet.textSync("Hoot!", {
-      font: "Standard",
-      horizontalLayout: "default",
-      verticalLayout: "default"
-    })
-  );
+// async function setupSchool() {
+//   let verification = await verifyDirectory("", true)
+//   if (verification) {
+//     console.log(
+//       chalk.red("ERROR: ") + chalk.blue("You already have a school folder.")
+//     );
+//     console.log(
+//       chalk.green("Note: ") +
+//         chalk.blue("hoot setup ") +
+//         chalk.yellow("is a one-time command.")
+//     );
+//     shell.exit(1)
+//   }
+//   /*
+//   create directory with name in current directory
+//   */
+//   console.log(
+//     figlet.textSync("Hoot!", {
+//       font: "Standard",
+//       horizontalLayout: "default",
+//       verticalLayout: "default"
+//     })
+//   );
 
-  console.log("Welcome! It's great to have you.");
-  console.log("Let's get you started with Hoot, shall we?");
-  let answers = await inquirer.prompt([
-    {
-      type: "confirm",
-      name: "make",
-      message: "Create school folder?",
-      default: true
-    },
-    {
-      type: "confirm",
-      message: "Make 'other' folder",
-      name: "other",
-      default: true
-    }
-  ]);
-  console.log(answers.make ? "Great!" : "Ok, bye!");
+//   console.log("Welcome! It's great to have you.");
+//   console.log("Let's get you started with Hoot, shall we?");
+//   let answers = await inquirer.prompt([
+//     {
+//       type: "confirm",
+//       name: "make",
+//       message: "Create school folder?",
+//       default: true
+//     },
+//     {
+//       type: "confirm",
+//       message: "Make 'other' folder",
+//       name: "other",
+//       default: true
+//     }
+//   ]);
+//   console.log(answers.make ? "Great!" : "Ok, bye!");
 
-  await makeDirectory("");
-  if (answers.other) {
-    await makeDirectory("/other");
-  }
+//   await makeDirectory("");
+//   if (answers.other) {
+//     await makeDirectory("/other");
+//   }
 
-  console.log(
-    `Your school folder has been created. I'll see you soon, ${
-      os.userInfo().username
-    }!`
-  );
-}
+//   console.log(
+//     `Your school folder has been created. I'll see you soon, ${
+//       os.userInfo().username
+//     }!`
+//   );
+// }
 
 async function makeSubject(name) {
   if (!await verifyDirectory("", true)) {
@@ -160,7 +161,7 @@ program
 program
   .command("setup")
   .description("Setup hoot")
-  .action(setupSchool);
+  .action(makeSchool);
 
 program.parse(process.argv);
 if (process.argv.length < 3) {

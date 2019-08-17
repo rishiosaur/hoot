@@ -1,11 +1,10 @@
 const { verifyDirectory } = require("../../util/verifyDirectory")
 const { makeDirectory } = require("../../util/makeDirectory")
 const chalk = require("chalk")
-const figlet = require("figlet")
-const os = require("os")
+const shell = require("shelljs");
 const inquirer = require("inquirer")
 
-async function setupSchool() {
+async function makeSchool() {
     if (await verifyDirectory("", true)) {
       console.log(
         chalk.red("ERROR: ") + chalk.blue("You already have a school folder.")
