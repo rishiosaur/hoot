@@ -28,13 +28,6 @@ async function verifySchool() {
   }
 }
 
-async function verifySubject(name) {
-  let path = `/Users/${os.userInfo().username}/Documents/School/${name}`;
-  if (existsSync(path)) {
-    return true;
-  }
-}
-
 async function verifyAssignment(assigName, assigSubject) {
   let path = `/Users/${
     os.userInfo().username
@@ -118,7 +111,7 @@ async function makeAssignment(name) {
     }
   ]);
 
-  let aVer = await verifyAssignment(name, answers.subject);
+  let aVer = await verifyDirectory(`${answers.subject}/${name}`, true);
   if (aVer) {
     console.log(
       chalk.red("ERROR ") + chalk.blue("Assignment already exists on file.")
@@ -180,7 +173,7 @@ async function makeAssignment(name) {
 }
 
 async function setupSchool() {
-  let verification = await verifySchool();
+  let verification = verifyDirectory('', true)
   if (verification) {
     console.log(
       chalk.red("ERROR: ") + chalk.blue("You already have a school folder.")
@@ -269,7 +262,8 @@ async function makeSubject(name) {
     console.log("That's fine, bye!");
     return;
   }
-  let subjectVerification = await verifySubject(name);
+  
+  let subjectVerification = await verifyDirectory(name, true);
   if (subjectVerification) {
     console.log(
       chalk.red("ERROR ") + chalk.blue("Subject already exists on file.")
