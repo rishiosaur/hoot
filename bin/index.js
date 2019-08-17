@@ -37,109 +37,97 @@ async function writeSubjectRC(subjectName, subjectType) {
   );
 }
 
-async function makeAssignment(name) {
-  if (!shell.which("git")) {
-    shell.echo("Sorry, this script requires git");
-    shell.exit(1);
-  }
-  let subjects = await getDirectory("");
-  subjects = subjects.filter(subject => subject != "other")
+// async function makeAssignment(name) {
+//   await verifyCmd("git")
+//   await verifyCmd("npm")
+//   let subjects = await getDirectory("");
+//   subjects = subjects.filter(subject => subject != "other")
   
-  if (subjects.length < 1) {
-    console.log(
-      chalk.red("ERROR ") +
-        chalk.blue("You do not have subjects. Try running ") +
-        chalk.green("hoot subject <title>")
-    );
-    return;
-  }
-  console.log(
-    chalk.green(`Alright, let's make your assignment called: ${name}`)
-  );
-  let answers = await inquirer.prompt([
-    {
-      type: "list",
-      name: "subject",
-      message: "Subject",
-      choices: subjects
-    },
-    {
-      type: "list",
-      name: "type",
-      message: "Assignment type",
-      choices: ["Report", "Short-answer", "Presentation"]
-    },
-    {
-      type: "confirm",
-      name: "research",
-      message: "Add research folder",
-      default: true
-    }
-  ]);
+//   if (subjects.length < 1) {
+//     console.log(
+//       chalk.red("ERROR ") +
+//         chalk.blue("You do not have subjects. Try running ") +
+//         chalk.green("hoot subject <title>")
+//     );
+//     shell.exit(1)
+//   }
+  
+//   console.log(
+//     chalk.green(`Alright, let's make your assignment called: ${name}`)
+//   );
 
-  let aVer = await verifyDirectory(`${answers.subject}/${name}`, true);
-  if (aVer) {
-    console.log(
-      chalk.red("ERROR ") + chalk.blue("Assignment already exists on file.")
-    );
-    return;
-  }
+//   let answers = await inquirer.prompt([
+//     {
+//       type: "list",
+//       name: "subject",
+//       message: "Subject",
+//       choices: subjects
+//     },
+//     {
+//       type: "list",
+//       name: "type",
+//       message: "Assignment type",
+//       choices: ["Report", "Short-answer", "Presentation"]
+//     },
+//     {
+//       type: "confirm",
+//       name: "research",
+//       message: "Add research folder",
+//       default: true
+//     }
+//   ]);
 
-  await mkdirSync(
-    `/Users/${os.userInfo().username}/Documents/School/${
-      answers.subject
-    }/${name}`
-  );
-  console.log("Assignment folder created.");
-  await mkdirSync(
-    `/Users/${os.userInfo().username}/Documents/School/${
-      answers.subject
-    }/${name}/mark`
-  );
-  console.log("Rubric folder created.");
-  if (answers.research) {
-    await mkdirSync(
-      `/Users/${os.userInfo().username}/Documents/School/${
-        answers.subject
-      }/${name}/research`
-    );
-    console.log("Research folder created.");
-  }
-  await copy(
-    resolve(`./templates/${answers.type.toLowerCase()}`),
-    `/Users/${os.userInfo().username}/Documents/School/${
-      answers.subject
-    }/${name}/`,
-    function(err) {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log("Copied " + answers.type + " folder");
-        shell.cd(
-          `/Users/${os.userInfo().username}/Documents/School/${
-            answers.subject
-          }/${name}`
-        );
-        console.log("Changed directories to assignment");
-        console.log("Initializing Git")
-        if (shell.exec("git init").code !== 0) {
-          shell.echo("Error: Git commit failed");
-          shell.exit(1);
-        }
-        console.log("Installing NPM packages")
+//   if (await verifyDirectory(`${answers.subject}/${name}`, true)) {
+//     console.log(
+//       chalk.red("ERROR ") + chalk.blue("Assignment already exists on file.")
+//     );
+//     shell.exit(1)
+//   }
+
+//   await makeDirectory(`${answers.subject}/${name}`)
+//   console.log("Assignment folder created.");
+//   await makeDirectory(`${answers.subject}/${name}/mark`)
+//   console.log("Rubric folder created.");
+//   if (answers.research) {
+//     await makeDirectory(`${answers.subject}/${name}/research`)
+//     console.log("Research folder created.");
+//   }
+
+//   await copy(
+//     resolve(`./templates/${answers.type.toLowerCase()}`),
+//     `/Users/${os.userInfo().username}/Documents/School/${
+//       answers.subject
+//     }/${name}/`,
+//     function(err) {
+//       if (err) {
+//         console.error(err);
+//       } else {
+//         console.log("Copied " + answers.type + " folder");
+//         shell.cd(
+//           `/Users/${os.userInfo().username}/Documents/School/${
+//             answers.subject
+//           }/${name}`
+//         );
+//         console.log("Changed directories to assignment");
+//         console.log("Initializing Git")
+//         if (shell.exec("git init").code !== 0) {
+//           shell.echo("Error: Git commit failed");
+//           shell.exit(1);
+//         }
+//         console.log("Installing NPM packages")
         
-        if (shell.exec("npm install").code !== 0) {
-          shell.echo("Error: NPM install failed");
-          shell.exit(1);
-        }
+//         if (shell.exec("npm install").code !== 0) {
+//           shell.echo("Error: NPM install failed");
+//           shell.exit(1);
+//         }
         
-      }
-    }
-  ); //copies directory, even if it has subdirectories or files
-}
+//       }
+//     }
+//   ); //copies directory, even if it has subdirectories or files
+// }
 
 async function setupSchool() {
-  let verification = verifyDirectory('', true)
+  let verification = await verifyDirectory("", true)
   if (verification) {
     console.log(
       chalk.red("ERROR: ") + chalk.blue("You already have a school folder.")
@@ -149,7 +137,7 @@ async function setupSchool() {
         chalk.blue("hoot setup ") +
         chalk.yellow("is a one-time command.")
     );
-    return;
+    shell.exit(1)
   }
   /*
   create directory with name in current directory
