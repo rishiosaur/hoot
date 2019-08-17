@@ -1,10 +1,14 @@
-import chalk from "chalk";
+const chalk = require("chalk")
 
 const shell = require("shelljs")
 
-export function verifyCmd(command){
-    if(shell.which(command)){
+async function verifyCmd(command){
+    if(!shell.which(command)){
         console.log(chalk.red("ERROR:") + chalk.blue("This script requires") + command)
         shell.exit(1)
     }
+}
+
+module.exports = {
+    verifyCmd : verifyCmd
 }
