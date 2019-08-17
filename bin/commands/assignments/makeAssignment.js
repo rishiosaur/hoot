@@ -6,6 +6,9 @@ const { getDirectoryPath } = require("../../util/getDirectoryPath")
 const chalk = require("chalk")
 const shell = require("shelljs");
 const inquirer = require("inquirer")
+const { promisify } = require("util")
+const ncp = require("ncp")
+const copy = promisify(ncp);
 
 async function makeAssignment(name) {
     await verifyCmd("git")
@@ -64,7 +67,7 @@ async function makeAssignment(name) {
     }
   
     await copy(
-      resolve(`./templates/${answers.type.toLowerCase()}`) , getDirectoryPath(`${answers.subject}/${name}`),
+      `./templates/${answers.type.toLowerCase()}` , getDirectoryPath(`${answers.subject}/${name}`),
       function(err) {
         if (err) {
           console.error(err);
