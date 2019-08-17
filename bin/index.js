@@ -202,6 +202,7 @@ async function makeSubject(name) {
       choices: ["Computer Science", "Math"]
     }
   ]);
+
   console.log(
     chalk.blue(
       `Just to confirm, you want to make a subject called ${name}, of type ${
@@ -209,6 +210,7 @@ async function makeSubject(name) {
       }?`
     )
   );
+
   let answers2 = await inquirer.prompt({
     type: "confirm",
     name: "confirm",
