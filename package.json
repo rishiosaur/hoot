@@ -1,6 +1,6 @@
 {
   "name": "hoot-cli",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "An assignment managing system.",
   "main": "index.js",
   "scripts": {
