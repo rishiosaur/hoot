@@ -190,11 +190,17 @@ async function setupSchool() {
 }
 
 async function makeSubject(name) {
-  let verification = await verifyDirectory("")
-  if (!verification) {
+  if (!await verifyDirectory("", true)) {
     console.log(chalk.red("ERROR: ") + chalk.blue("School not found"));
     console.log(chalk.green("Try running ") + chalk.blue("hoot setup"));
-    return;
+    shell.exit(1)
+  }
+
+  if (await verifyDirectory(name, true)) {
+    console.log(
+      chalk.red("ERROR ") + chalk.blue("Subject already exists on file.")
+    );
+    shell.exit(1)
   }
 
   let answers = await inquirer.prompt([
@@ -225,15 +231,7 @@ async function makeSubject(name) {
 
   if (!answers2.confirm) {
     console.log("That's fine, bye!");
-    return;
-  }
-  
-  let subjectVerification = await verifyDirectory(name, true);
-  if (subjectVerification) {
-    console.log(
-      chalk.red("ERROR ") + chalk.blue("Subject already exists on file.")
-    );
-    return;
+    shell.exit(1)
   }
 
   console.log("Alright, let's go!");
