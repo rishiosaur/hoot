@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const pckg = require("./../package.json");
 const program = require("commander");
 const inquirer = require("inquirer");
 const chalk = require("chalk");
@@ -8,14 +7,16 @@ const os = require("os");
 const figlet = require("figlet");
 const shell = require("shelljs");
 
-const { readdirSync, mkdirSync, writeFile, existsSync } = require("fs");
+const { mkdirSync, writeFile } = require("fs");
 const { copy } = require("fs-extra");
 const { resolve } = require("path");
-const { promisify } = require("util");
 const { getDirectory } = require("./util/getDirectory")
 const { verifyDirectory } = require("./util/verifyDirectory")
+const { makeDirectory } = require("./util/makeDirectory")
+const { verifyCmd } = require("./util/verifyCmd")
 const ncp = require("ncp");
-const copyTemplate = program;
+
+const { makeAssignment }  = require("./commands/assignments/makeAssignment")
 
 async function writeSubjectRC(subjectName, subjectType) {
   let string =
