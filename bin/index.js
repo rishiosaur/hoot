@@ -18,25 +18,25 @@ const ncp = require("ncp");
 
 const { makeAssignment }  = require("./commands/assignments/makeAssignment")
 const { makeSchool } = require("./commands/school/makeSchool")
-
-async function writeSubjectRC(subjectName, subjectType) {
-  let string =
-    "{\n" +
-    "'name':" +
-    subjectName +
-    ",\n" +
-    "'type':" +
-    subjectType +
-    ",\n" +
-    "}";
-  writeFile(
-    `/Users/${
-      os.userInfo().username
-    }/Documents/School/${subjectName}/hoot.json`,
-    string,
-    err => console.log(err)
-  );
-}
+const { makeSubject } = require("./commands/subjects/makeSubject")
+// async function writeSubjectRC(subjectName, subjectType) {
+//   let string =
+//     "{\n" +
+//     "'name':" +
+//     subjectName +
+//     ",\n" +
+//     "'type':" +
+//     subjectType +
+//     ",\n" +
+//     "}";
+//   writeFile(
+//     `/Users/${
+//       os.userInfo().username
+//     }/Documents/School/${subjectName}/hoot.json`,
+//     string,
+//     err => console.log(err)
+//   );
+// }
 
 // async function setupSchool() {
 //   let verification = await verifyDirectory("", true)
@@ -92,59 +92,59 @@ async function writeSubjectRC(subjectName, subjectType) {
 //   );
 // }
 
-async function makeSubject(name) {
-  if (!await verifyDirectory("", true)) {
-    console.log(chalk.red("ERROR: ") + chalk.blue("School not found"));
-    console.log(chalk.green("Try running ") + chalk.blue("hoot setup"));
-    shell.exit(1)
-  }
+// async function makeSubject(name) {
+//   if (!await verifyDirectory("", true)) {
+//     console.log(chalk.red("ERROR: ") + chalk.blue("School not found"));
+//     console.log(chalk.green("Try running ") + chalk.blue("hoot setup"));
+//     shell.exit(1)
+//   }
 
-  if (await verifyDirectory(name, true)) {
-    console.log(
-      chalk.red("ERROR ") + chalk.blue("Subject already exists on file.")
-    );
-    shell.exit(1)
-  }
+//   if (await verifyDirectory(name, true)) {
+//     console.log(
+//       chalk.red("ERROR ") + chalk.blue("Subject already exists on file.")
+//     );
+//     shell.exit(1)
+//   }
 
-  let answers = await inquirer.prompt([
-    {
-      type: "list",
-      name: "type",
-      message: "Type of subject",
-      choices: ["Computer Science", "Math"]
-    }
-  ]);
+//   let answers = await inquirer.prompt([
+//     {
+//       type: "list",
+//       name: "type",
+//       message: "Type of subject",
+//       choices: ["Computer Science", "Math"]
+//     }
+//   ]);
 
-  console.log(
-    chalk.blue(
-      `Just to confirm, you want to make a subject called ${name}, of type ${
-        answers.type
-      }?`
-    )
-  );
+//   console.log(
+//     chalk.blue(
+//       `Just to confirm, you want to make a subject called ${name}, of type ${
+//         answers.type
+//       }?`
+//     )
+//   );
 
-  let answers2 = await inquirer.prompt({
-    type: "confirm",
-    name: "confirm",
-    messsage: chalk.blue(
-      `Just to confirm, you want to make a subject called ${name}, of type ${
-        answers.subject
-      }?`
-    ),
-    default: true
-  });
+//   let answers2 = await inquirer.prompt({
+//     type: "confirm",
+//     name: "confirm",
+//     messsage: chalk.blue(
+//       `Just to confirm, you want to make a subject called ${name}, of type ${
+//         answers.subject
+//       }?`
+//     ),
+//     default: true
+//   });
 
-  if (!answers2.confirm) {
-    console.log("That's fine, bye!");
-    shell.exit(1)
-  }
+//   if (!answers2.confirm) {
+//     console.log("That's fine, bye!");
+//     shell.exit(1)
+//   }
 
-  console.log("Alright, let's go!");
-  await mkdirSync(`/Users/${os.userInfo().username}/Documents/School/${name}`);
-  console.log("Subject created.");
-  await writeSubjectRC(name, answers.type);
-  console.log(chalk.blue("Hoot.json created. You're all set!"));
-}
+//   console.log("Alright, let's go!");
+//   await mkdirSync(`/Users/${os.userInfo().username}/Documents/School/${name}`);
+//   console.log("Subject created.");
+//   await writeSubjectRC(name, answers.type);
+//   console.log(chalk.blue("Hoot.json created. You're all set!"));
+// }
 
 program
   .command("assignment <title>")
