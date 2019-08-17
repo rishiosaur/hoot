@@ -167,10 +167,12 @@ async function setupSchool() {
     }
   ]);
   console.log(answers.make ? "Great!" : "Ok, bye!");
-  await mkdirSync(`/Users/${os.userInfo().username}/Documents/School`);
+
+  await makeDirectory("");
   if (answers.other) {
-    await mkdirSync(`/Users/${os.userInfo().username}/Documents/School/other`);
+    await makeDirectory("/other");
   }
+
   console.log(
     `Your school folder has been created. I'll see you soon, ${
       os.userInfo().username
