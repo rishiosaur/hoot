@@ -8,8 +8,7 @@ const chalk = require("chalk")
 const shell = require("shelljs");
 const inquirer = require("inquirer")
 const { promisify } = require("util")
-const ncp = require("ncp")
-const copy = promisify(ncp);
+const copydir = require('copy-dir');
 
 async function makeAssignment(name) {
     await verifyCmd("git")
@@ -66,9 +65,8 @@ async function makeAssignment(name) {
       await makeDirectory(`${answers.subject}/${name}/research`)
       console.log("Research folder created.");
     }
-  
-    await copy(await getGlobalPath(
-      `/node-modules/hoot-cli/templates/${answers.type.toLowerCase()}`).catch(err => console.log(err)) , getDirectoryPath(`${answers.subject}/${name}`),
+    let a = await getGlobalPath(`/hoot-cli/templates/${answers.type.toLowerCase()}`).catch(err => console.log(err))
+    await copydir(a , getDirectoryPath(`${answers.subject}/${name}`), {},
       function(err) {
         if (err) {
           console.error(err);
