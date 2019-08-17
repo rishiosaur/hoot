@@ -17,41 +17,6 @@ const { verifyDirectory } = require("./util/verifyDirectory")
 const ncp = require("ncp");
 const copyTemplate = program;
 
-async function verifySchool() {
-  try {
-    let a = await getDirectories(
-      `/Users/${os.userInfo().username}/Documents/School`
-    );
-    return true;
-  } catch (err) {
-    return false;
-  }
-}
-
-async function verifyAssignment(assigName, assigSubject) {
-  let path = `/Users/${
-    os.userInfo().username
-  }/Documents/School/${assigSubject}/${assigName}`;
-  if (existsSync(path)) {
-    return true;
-  }
-}
-
-async function getSubjects() {
-  try {
-    let subjects = await getDirectories(
-      `/Users/${os.userInfo().username}/Documents/School`
-    ).filter(subject => subject != "other");
-    if (subjects.length > 0) {
-      return subjects;
-    } else {
-      return false;
-    }
-  } catch (err) {
-    return false;
-  }
-}
-
 async function writeSubjectRC(subjectName, subjectType) {
   let string =
     "{\n" +
