@@ -2,6 +2,7 @@ const { verifyDirectory } = require("../../util/verifyDirectory")
 const { makeDirectory } = require("../../util/makeDirectory")
 const chalk = require("chalk")
 const shell = require("shelljs");
+const figlet = require('figlet')
 const inquirer = require("inquirer")
 
 async function makeSchool() {
