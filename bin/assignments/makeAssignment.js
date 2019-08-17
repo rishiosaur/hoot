@@ -1,12 +1,13 @@
+import { getDirectory } from "../util/getDirectory";
 const chalk = require("chalk")
 const shell = require("shelljs")
+const {verifyCmd} = require("../util/verifyCmd")
+const {verifyDirectory} = require("../util/verifyDirectory.js")
 
-async function makeAssignment(name) {
-    if (!shell.which("git")) {
-      shell.echo("Sorry, this script requires git");
-      shell.exit(1);
-    }
-    let verification = await verifySchool();
+export default async function makeAssignment(name) {
+    verifyCmd("git")
+    verifyCmd("npm")
+    let schoolVerification = await getDirectory("")
     let subjects = await getSubjects();
     if (!subjects) {
       console.log(
