@@ -4,6 +4,7 @@ const program = require("commander");
 const { makeAssignment }  = require("./commands/assignments/makeAssignment")
 const { makeSchool } = require("./commands/school/makeSchool")
 const { makeSubject } = require("./commands/subjects/makeSubject")
+const { finishAssignment } = require("./commands/assignments/finishAssignment")
 
 program
   .command("assignment <title>")
@@ -21,6 +22,12 @@ program
   .command("setup")
   .description("Setup hoot")
   .action(makeSchool);
+
+program
+  .command("finish")
+  .description("Finish an assignment")
+  .alias("f")
+  .action(finishAssignment)
 
 program.parse(process.argv);
 if (process.argv.length < 3) {
