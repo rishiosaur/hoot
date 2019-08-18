@@ -3,9 +3,12 @@ const { verifyDirectory } = require("../../util/verifyDirectory")
 const { makeDirectory } = require("../../util/makeDirectory")
 const { verifyCmd } = require("../../util/verifyCmd")
 const { getDirectoryPath } = require("../../util/getDirectoryPath")
+const { getGlobalPath } = require("../../util/getGlobalPath")
 const chalk = require("chalk")
 const shell = require("shelljs");
 const inquirer = require("inquirer")
+const { promisify } = require("util")
+const copydir = require('copy-dir');
 
 async function makeAssignment(name) {
     await verifyCmd("git")
@@ -25,7 +28,7 @@ async function makeAssignment(name) {
     console.log(
       chalk.green(`Alright, let's make your assignment called: ${name}`)
     );
-  
+
     let answers = await inquirer.prompt([
       {
         type: "list",
@@ -62,9 +65,8 @@ async function makeAssignment(name) {
       await makeDirectory(`${answers.subject}/${name}/research`)
       console.log("Research folder created.");
     }
-  
-    await copy(
-      resolve(`./templates/${answers.type.toLowerCase()}`) , getDirectoryPath(`${answers.subject}/${name}`),
+    let a = await getGlobalPath(`/hoot-cli/templates/${answers.type.toLowerCase()}`).catch(err => console.log(err))
+    await copydir(a , getDirectoryPath(`${answers.subject}/${name}`), {},
       function(err) {
         if (err) {
           console.error(err);
