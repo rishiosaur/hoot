@@ -22,6 +22,11 @@ program
   .description("Setup hoot")
   .action(makeSchool);
 
+program
+  .command("view <assignments|subjects>")
+  .alias("v")
+  .description("Lists your unfinished assignments or your subjects.")
+
 program.parse(process.argv);
 if (process.argv.length < 3) {
   program.help();
