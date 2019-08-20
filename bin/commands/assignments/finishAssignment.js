@@ -9,7 +9,7 @@ async function finishAssignment(subject,assignment){
     let path = `${subject}/${assignment}`
     let pathToAssignmentJSON = getDirectoryPath(`${path}/hoot.json`)
     await verifyDirectory(path)
-    // await makeDirectory(`${path}/mark`)
+    await makeDirectory(`${path}/mark`)
     let assignmentHootJSON = require(pathToAssignmentJSON)
     
     let answers = await inquirer.prompt([
@@ -24,9 +24,11 @@ async function finishAssignment(subject,assignment){
     await writeFile(pathToAssignmentJSON, JSON.stringify(assignmentHootJSON), function (err) {
         if (err) return console.log(err);
         console.log(JSON.stringify(assignmentHootJSON));
-        console.log('writing to ' + pathToAssignmentJSON);
+        console.log('Writing to ' + pathToAssignmentJSON);
+        console.log("I'll now move this assignment to the finished folder.")
     });
-
+    await move(getDirectoryPath(path), getDirectoryPath(`${subject}/Finished/${assignment}`))
+    console.log(`Moved ${subject}/${assignment} to ${subject}/Finished/${assignment}`)
 }
 
 module.exports = {
