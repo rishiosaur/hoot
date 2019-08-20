@@ -7,8 +7,21 @@ const { getGlobalPath } = require("../../util/getGlobalPath")
 const chalk = require("chalk")
 const shell = require("shelljs");
 const inquirer = require("inquirer")
-const { promisify } = require("util")
+const { writeFile } = require("fs");
 const copydir = require('copy-dir');
+
+async function writeAssignmentRC(assignmentName, subjectName) {
+  let string =
+    "{\n" +
+    `"name":` +
+    `"${subjectName}"` +
+    "\n" +
+    "}";
+  writeFile(getDirectoryPath(`${subjectName}/${assignmentName}/hoot.json`),
+    string,
+    err => console.log(err ? err : "")
+  );
+}
 
 async function makeAssignment(name) {
     await verifyCmd("git")
@@ -56,11 +69,11 @@ async function makeAssignment(name) {
       );
       shell.exit(1)
     }
-  
+
     await makeDirectory(`${answers.subject}/${name}`)
     console.log("Assignment folder created.");
-    await makeDirectory(`${answers.subject}/${name}/mark`)
-    console.log("Rubric folder created.");
+    await writeAssignmentRC(name,answers.subject)
+    console.log("hoot.json written.")
     if (answers.research) {
       await makeDirectory(`${answers.subject}/${name}/research`)
       console.log("Research folder created.");
