@@ -1,8 +1,7 @@
 const inquirer = require("inquirer")
-const { getDirectory } = require("../../util/getDirectory")
 const { getDirectoryPath } = require("../../util/getDirectoryPath")
 const { writeFile, unlinkSync } = require("fs")
-const shell = require("shelljs")
+const { move } = require("fs-extra")
 const { verifyDirectory } = require("../../util/verifyDirectory")
 const { makeDirectory } = require("../../util/makeDirectory")
 
