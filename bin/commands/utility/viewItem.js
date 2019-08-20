@@ -28,10 +28,12 @@ async function viewItem(item) {
   let assignments = await getDirectory("");
   if (check) {
     console.log(chalk.blue("Your assignments:"))
-    assignments.forEach((assignment, index) => (
-        getDirectory(assignment).then((assignment) => {
-            console.log(chalk.green(assignments[index]))
+    subjects.forEach((subject, index) => (
+        getDirectory(subject).then(assignment => {
+            console.log(chalk.green(subjects[index]))
+
             assignment.forEach(assignment => console.log(assignment))
+            //Separator of the subjects
             console.log("--")
         })
     ))
