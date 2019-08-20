@@ -24,7 +24,7 @@ program
   .action(makeSchool);
 
 program
-  .command("finish <subject/assignment>")
+  .command("finish <subject> <assignment>")
   .description("Finish an assignment")
   .alias("f")
   .action(finishAssignment)
