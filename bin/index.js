@@ -4,6 +4,7 @@ const program = require("commander");
 const { makeAssignment }  = require("./commands/assignments/makeAssignment")
 const { makeSchool } = require("./commands/school/makeSchool")
 const { makeSubject } = require("./commands/subjects/makeSubject")
+const { finishAssignment } = require("./commands/assignments/finishAssignment")
 const { viewItem } = require("./commands/utility/viewItem")
 
 program
@@ -22,6 +23,12 @@ program
   .command("setup")
   .description("Setup hoot")
   .action(makeSchool);
+
+program
+  .command("finish <subject> <assignment>")
+  .description("Finish an assignment")
+  .alias("f")
+  .action(finishAssignment)
 
 program
   .command("view <assignments|subjects>")
