@@ -39,6 +39,12 @@ async function makeSchool() {
         default: true
       },
       {
+        type: "number",
+        name: "terms",
+        message: "How many semesters/terms do you have this year?",
+        default: 2
+      },
+      {
         type: "confirm",
         message: "Make 'other' folder",
         name: "other",
@@ -50,6 +56,12 @@ async function makeSchool() {
     await makeDirectory("");
     if (answers.other) {
       await makeDirectory("/other");
+    }
+    
+    let numberOfTerms = answers.terms
+    console.log(`Creating ${numberOfTerms} terms.`)
+    for (let index = 0; index < numberOfTerms; index++) {
+      await makeDirectory(`Term ${index+1}`)
     }
   
     console.log(
