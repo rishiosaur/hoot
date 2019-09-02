@@ -10,19 +10,6 @@ const inquirer = require("inquirer")
 const { writeFile } = require("fs");
 const copydir = require('copy-dir');
 
-async function writeAssignmentRC(assignmentName, subjectName) {
-  let string =
-    "{\n" +
-    `"name":` +
-    `"${subjectName}"` +
-    "\n" +
-    "}";
-  writeFile(getDirectoryPath(`${subjectName}/${assignmentName}/hoot.json`),
-    string,
-    err => console.log(err ? err : "")
-  );
-}
-
 async function makeAssignment(name) {
     await verifyCmd("git")
     await verifyCmd("npm")
@@ -72,7 +59,13 @@ async function makeAssignment(name) {
 
     await makeDirectory(`${answers.subject}/${name}`)
     console.log("Assignment folder created.");
-    await writeAssignmentRC(name,answers.subject)
+    let assignmentRCJSON = {}
+    assignmentRCJSON.name = answers.subject
+    await writeFile(getDirectoryPath(`${answers.subject}/${name}/hoot.json`), JSON.stringify(assignmentRCJSON), function (err) {
+      if (err) return console.log(err);
+      console.log(JSON.stringify(assignmentRCJSON));
+      console.log('Writing to ' + getDirectoryPath(`${answers.subject}/${name}/hoot.json`));
+    })
     console.log("hoot.json written.")
     if (answers.research) {
       await makeDirectory(`${answers.subject}/${name}/research`)

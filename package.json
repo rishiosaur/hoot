@@ -1,12 +1,16 @@
 {
   "name": "hoot-cli",
-  "version": "1.0.6",
-  "description": "An assignment managing system.",
+  "version": "1.1.0",
+  "description": "The assignment managing system for tech-savvy students.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "hoot",
+    "assignment",
+    "school"
+  ],
   "author": "rishiosaur",
   "license": "MIT",
   "dependencies": {
