@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["hoot","assignment","school"],
+  "keywords": [
+    "hoot",
+    "assignment",
+    "school"
+  ],
   "author": "rishiosaur",
   "license": "MIT",
   "dependencies": {
