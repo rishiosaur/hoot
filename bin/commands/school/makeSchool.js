@@ -49,13 +49,22 @@ async function makeSchool() {
         message: "Make 'other' folder",
         name: "other",
         default: true
-      }
+      },
+      {
+        type: "input",
+        message: "Are you in a specialized program that requires you to do things specific to it outside of the reguar curriculum, such as IB or AP? If you are, put the name here.",
+        name: "program"
+      },
     ]);
     console.log(answers.make ? "Great!" : "Ok, bye!");
   
     await makeDirectory("");
     if (answers.other) {
       await makeDirectory("/other");
+    }
+
+    if (answers.program) {
+      await makeDirectory(`/${answers.program}`)
     }
     
     let numberOfTerms = answers.terms
