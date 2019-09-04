@@ -13,9 +13,21 @@ const copydir = require('copy-dir');
 async function makeAssignment(name) {
     await verifyCmd("git")
     await verifyCmd("npm")
-    let subjects = await getDirectory("");
-    subjects = subjects.filter(subject => subject != "other")
+    let terms = await getDirectory("");
     
+    console.log(
+      chalk.green(`Alright, let's make your assignment called: ${name}`)
+    );
+    let selectedTerm = await inquirer.prompt(
+      {
+        type: "list",
+        name: "term",
+        message: "Term",
+        choices: terms
+      }
+    )
+    let subjects = await getDirectory(selectedTerm.term)
+    subjects = subjects.filter(subject => subject != "other")
     if (subjects.length < 1) {
       console.log(
         chalk.red("ERROR ") +
@@ -24,10 +36,6 @@ async function makeAssignment(name) {
       );
       shell.exit(1)
     }
-    
-    console.log(
-      chalk.green(`Alright, let's make your assignment called: ${name}`)
-    );
 
     let answers = await inquirer.prompt([
       {
@@ -50,35 +58,35 @@ async function makeAssignment(name) {
       }
     ]);
   
-    if (await verifyDirectory(`${answers.subject}/${name}`, true)) {
+    if (await verifyDirectory(`${selectedTerm.term}/${answers.subject}/${name}`, true)) {
       console.log(
         chalk.red("ERROR ") + chalk.blue("Assignment already exists on file.")
       );
       shell.exit(1)
     }
 
-    await makeDirectory(`${answers.subject}/${name}`)
+    await makeDirectory(`${selectedTerm.term}/${answers.subject}/${name}`)
     console.log("Assignment folder created.");
     let assignmentRCJSON = {}
     assignmentRCJSON.name = answers.subject
-    await writeFile(getDirectoryPath(`${answers.subject}/${name}/hoot.json`), JSON.stringify(assignmentRCJSON), function (err) {
+    await writeFile(getDirectoryPath(`${selectedTerm.term}/${answers.subject}/${name}/hoot.json`), JSON.stringify(assignmentRCJSON), function (err) {
       if (err) return console.log(err);
       console.log(JSON.stringify(assignmentRCJSON));
-      console.log('Writing to ' + getDirectoryPath(`${answers.subject}/${name}/hoot.json`));
+      console.log('Writing to ' + getDirectoryPath(`${selectedTerm.term}/${answers.subject}/${name}/hoot.json`));
     })
     console.log("hoot.json written.")
     if (answers.research) {
-      await makeDirectory(`${answers.subject}/${name}/research`)
+      await makeDirectory(`${selectedTerm.term}/${answers.subject}/${name}/research`)
       console.log("Research folder created.");
     }
-    let a = await getGlobalPath(`/hoot-cli/templates/${answers.type.toLowerCase()}`).catch(err => console.log(err))
-    await copydir(a , getDirectoryPath(`${answers.subject}/${name}`), {},
+    let templateToCopy = await getGlobalPath(`/hoot-cli/templates/${answers.type.toLowerCase()}`).catch(err => console.log(err))
+    await copydir(templateToCopy , getDirectoryPath(`${selectedTerm.term}/${answers.subject}/${name}`), {},
       function(err) {
         if (err) {
           console.error(err);
         } else {
           console.log("Copied " + answers.type + " folder");
-          shell.cd(getDirectoryPath(`${answers.subject}/${name}`)
+          shell.cd(getDirectoryPath(`${selectedTerm.term}/${answers.subject}/${name}`)
           );
           console.log("Changed directories to assignment");
           console.log("Initializing Git")
