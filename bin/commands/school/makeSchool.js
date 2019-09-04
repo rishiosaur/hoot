@@ -52,7 +52,7 @@ async function makeSchool() {
       },
       {
         type: "input",
-        message: "Are you in a specialized program that requires you to do things specific to it outside of the reguar curriculum, such as IB or AP? If you are, put the name here.",
+        message: "Are you in a specialized program that requires you to do things specific to it outside of the regular curriculum, such as IB or AP? If you are, put the name here.",
         name: "program"
       },
     ]);
