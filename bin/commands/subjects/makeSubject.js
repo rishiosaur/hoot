@@ -31,7 +31,7 @@ async function makeSubject(name) {
       shell.exit(1)
     }
     let path = await askForDirectory(1,"subject")
-    let answers = await inquirer.prompt([
+    let {subjectType} = await inquirer.prompt([
       {
         type: "list",
         name: "type",
@@ -49,9 +49,9 @@ async function makeSubject(name) {
     let writeConfirmation = await inquirer.prompt({
       type: "confirm",
       name: "confirm",
-      messsage: chalk.blue(
+      message: chalk.blue(
         `Just to confirm, you want to make a subject called ${name}, of type ${
-          answers.type
+          subjectType
         }?`
       ),
       default: true
@@ -65,7 +65,7 @@ async function makeSubject(name) {
     console.log("Alright, let's go!");
     await makeDirectory(`${path}/${name}`)
     console.log("Subject created.")
-    await writeSubjectRC(`${path}/${name}`, answers.type);
+    await writeSubjectRC(`${path}/${name}`, subjectType.type);
     console.log(chalk.blue("Hoot.json created. You're all set!"));
   }
 
