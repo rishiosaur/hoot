@@ -3,6 +3,7 @@ const { makeDirectory } = require("../../util/makeDirectory")
 const { getDirectory } = require("../../util/getDirectory")
 const { writeFile } = require("fs");
 const { getDirectoryPath } = require("../../util/getDirectoryPath")
+const { askForDirectory } = require("../../util/askForDirectory")
 const chalk = require("chalk")
 const shell = require("shelljs");
 const inquirer = require("inquirer")
@@ -29,14 +30,8 @@ async function makeSubject(name) {
       console.log(chalk.green("Try running ") + chalk.blue("hoot setup"));
       shell.exit(1)
     }
-    let terms = await getDirectory("")
+    let path = await askForDirectory(1,"subject")
     let answers = await inquirer.prompt([
-      {
-        type: "list",
-        name: "term",
-        message: "What term is this subject in?",
-        choices: terms
-      },
       {
         type: "list",
         name: "type",
@@ -45,7 +40,7 @@ async function makeSubject(name) {
       }
     ]);
   
-    if (await verifyDirectory(`${answers.term}/${name}`, true)) {
+    if (await verifyDirectory(`${path}/${name}`, true)) {
         console.log(
           chalk.red("ERROR ") + chalk.blue("Subject already exists on file.")
         );
@@ -56,7 +51,7 @@ async function makeSubject(name) {
       name: "confirm",
       messsage: chalk.blue(
         `Just to confirm, you want to make a subject called ${name}, of type ${
-          answers.subject
+          answers.type
         }?`
       ),
       default: true
@@ -68,9 +63,9 @@ async function makeSubject(name) {
     }
   
     console.log("Alright, let's go!");
-    await makeDirectory(`${answers.term}/${name}`)
+    await makeDirectory(`${path}/${name}`)
     console.log("Subject created.")
-    await writeSubjectRC(`${answers.term}/${name}`, answers.type);
+    await writeSubjectRC(`${path}/${name}`, answers.type);
     console.log(chalk.blue("Hoot.json created. You're all set!"));
   }
 
