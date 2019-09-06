@@ -44,5 +44,5 @@ async function makeUnit(name) {
 }
 
 module.exports = {
-    makeSubject : makeUnit
+    makeUnit : makeUnit
 }
