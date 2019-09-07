@@ -9,7 +9,7 @@ const chalk = require("chalk");
 const shell = require("shelljs");
 const inquirer = require("inquirer");
 const { writeFile } = require("fs");
-const copydir = require("copy-dir");
+const copyDir = require("copy-dir");
 
 async function makeAssignment(name) {
   await verifyCmd("git");
@@ -19,12 +19,19 @@ async function makeAssignment(name) {
     chalk.green(`Alright, let's make your assignment called: ${name}`)
   );
   let path = await askForDirectory(3, "assignment");
+
+  let templateP = await getGlobalPath(
+    `/hoot-cli/templates/`
+  ).catch(err => console.log(err));
+  let templates = await shell.cd(templateP)
+  templates = await shell.exec("ls").stdout
+  templates = templates.split("\n").slice(0, -1)
   let answers = await inquirer.prompt([
     {
       type: "list",
       name: "type",
       message: "Assignment type",
-      choices: ["Report", "Short-answer", "Presentation"]
+      choices: templates
     },
     {
       type: "confirm",
@@ -64,7 +71,7 @@ async function makeAssignment(name) {
   let templateToCopy = await getGlobalPath(
     `/hoot-cli/templates/${answers.type.toLowerCase()}`
   ).catch(err => console.log(err));
-  await copydir(
+  await copyDir(
     templateToCopy,
     getDirectoryPath(`${path}/${name}`),
     {},
