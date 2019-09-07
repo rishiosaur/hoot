@@ -1,48 +1,34 @@
 const inquirer = require("inquirer");
 const { getDirectory } = require("../../util/getDirectory");
+const { getDirectoryPath } = require("../../util/getDirectoryPath");
+const os = require("os")
+const { joinPath } = require("../../util/joinPath")
+
 const shell = require("shelljs");
 const chalk = require("chalk");
 
-function validateItem(item) {
-  let lowercasedItem = item.toLowerCase();
-  let arrayToMatch = ["a", "s", "assignments", "subjects"];
-  if (arrayToMatch.includes(lowercasedItem)) {
-    return ["a", "assignments"].includes(lowercasedItem) ? true : false;
-  } else {
-    console.log(
-      chalk.red("ERROR: ") +
-        chalk.blue(
-          "Invalid input for " +
-            chalk.green("hoot view\n") +
-            chalk.blue("Try running ") +
-            chalk.green("hoot view subjects")
-        )
-    );
-    shell.exit(1);
-  }
-}
+async function viewItem() {
+  let homedir = await os.homedir()
+  console.log(`Format: ${chalk.blue("School")} / ${chalk.green("Term <number>")} / ${chalk.yellow("<Subject>")} / ${chalk.red("<Unit>")} / <Assignments|Finished>`)
+  let stuff = await shell.exec(`find ${getDirectoryPath("")} -type d  -not -path '*/\.*';`, {silent: true}).stdout.split("\n").slice(0,-1)
+  let formattedStuff = stuff.map(path => {
+    return path.replace(homedir + "/Documents", "")
+  })
+  console.log(formattedStuff)
+  // let terms = await getDirectory("");
+  //   console.log(chalk.blue("Your assignments:"))
+  //   terms.forEach((term, index) => (
+  //       getDirectory(term).then(subject => {
+  //           console.log(chalk.green(terms[index]))
+  //           subject.forEach(subject => {
+  //             console.log(chalk.blue(subject))
+  //             console.log(getDirectory(getDirectoryPath(joinPath([term,subject]))))
+  //           })
+  //           //Separator of the subjects
+  //           console.log("---")
+  //       })
+  //   ))
 
-async function viewItem(item) {
-  let check = validateItem(item);
-  let subjects = await getDirectory("");
-  let assignments = await getDirectory("");
-  if (check) {
-    console.log(chalk.blue("Your assignments:"))
-    subjects.forEach((subject, index) => (
-        getDirectory(subject).then(assignment => {
-            console.log(chalk.green(subjects[index]))
-
-            assignment.forEach(assignment => console.log(assignment))
-            //Separator of the subjects
-            console.log("--")
-        })
-    ))
-  } else {
-    console.log(chalk.green("Your subjects:"));
-    subjects.forEach(subject => {
-      console.log(subject);
-    });
-  }
 }
 
 module.exports = {
