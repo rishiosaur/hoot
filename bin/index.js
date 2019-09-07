@@ -6,17 +6,19 @@ const { makeSchool } = require("./commands/school/makeSchool")
 const { makeSubject } = require("./commands/subjects/makeSubject")
 const { finishAssignment } = require("./commands/assignments/finishAssignment")
 const { viewItem } = require("./commands/utility/viewItem")
+const { makeUnit } = require("./commands/units/makeUnit")
+const { newItem } = require("./commands/utility/newItem")
 
 program
   .command("assignment <title>")
   .alias("a")
-  .description("Add a new assignment in your current year.")
+  .description("Create a new assignment.")
   .action(makeAssignment);
 
 program
   .command("subject <title>")
   .alias("s")
-  .description("Add a new subject")
+  .description("Create a new subject")
   .action(makeSubject);
 
 program
@@ -25,16 +27,28 @@ program
   .action(makeSchool);
 
 program
-  .command("finish <subject> <assignment>")
+  .command("finish")
   .description("Finish an assignment")
   .alias("f")
   .action(finishAssignment)
 
 program
-  .command("view <assignments|subjects>")
+  .command("unit <name>")
+  .description("Create a new unit")
+  .alias("u")
+  .action(makeUnit)
+
+program
+  .command("view")
   .alias("v")
   .description("Lists your unfinished assignments or your subjects.")
   .action(viewItem)
+
+program
+  .command("new")
+  .alias("n")
+  .description("Create a new assignment, subject, unit, note, or piece of homework.")
+  .action(newItem)
 
 program.parse(process.argv);
 if (process.argv.length < 3) {

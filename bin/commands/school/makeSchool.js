@@ -39,17 +39,38 @@ async function makeSchool() {
         default: true
       },
       {
+        type: "number",
+        name: "terms",
+        message: "How many semesters/terms do you have this year?",
+        default: 2
+      },
+      {
         type: "confirm",
         message: "Make 'other' folder",
         name: "other",
         default: true
-      }
+      },
+      {
+        type: "input",
+        message: "Are you in a specialized program that requires you to do things specific to it outside of the regular curriculum, such as IB or AP? If you are, put the name here.",
+        name: "program"
+      },
     ]);
     console.log(answers.make ? "Great!" : "Ok, bye!");
   
     await makeDirectory("");
     if (answers.other) {
       await makeDirectory("/other");
+    }
+
+    if (answers.program) {
+      await makeDirectory(`/${answers.program}`)
+    }
+    
+    let numberOfTerms = answers.terms
+    console.log(`Creating ${numberOfTerms} terms.`)
+    for (let index = 0; index < numberOfTerms; index++) {
+      await makeDirectory(`Term ${index+1}`)
     }
   
     console.log(

@@ -1,48 +1,47 @@
-const inquirer = require("inquirer");
-const { getDirectory } = require("../../util/getDirectory");
+const { getDirectoryPath } = require("../../util/getDirectoryPath");
+const os = require("os");
+
 const shell = require("shelljs");
 const chalk = require("chalk");
 
-function validateItem(item) {
-  let lowercasedItem = item.toLowerCase();
-  let arrayToMatch = ["a", "s", "assignments", "subjects"];
-  if (arrayToMatch.includes(lowercasedItem)) {
-    return ["a", "assignments"].includes(lowercasedItem) ? true : false;
-  } else {
-    console.log(
-      chalk.red("ERROR: ") +
-        chalk.blue(
-          "Invalid input for " +
-            chalk.green("hoot view\n") +
-            chalk.blue("Try running ") +
-            chalk.green("hoot view subjects")
-        )
-    );
-    shell.exit(1);
-  }
-}
-
-async function viewItem(item) {
-  let check = validateItem(item);
-  let subjects = await getDirectory("");
-  let assignments = await getDirectory("");
-  if (check) {
-    console.log(chalk.blue("Your assignments:"))
-    subjects.forEach((subject, index) => (
-        getDirectory(subject).then(assignment => {
-            console.log(chalk.green(subjects[index]))
-
-            assignment.forEach(assignment => console.log(assignment))
-            //Separator of the subjects
-            console.log("--")
-        })
-    ))
-  } else {
-    console.log(chalk.green("Your subjects:"));
-    subjects.forEach(subject => {
-      console.log(subject);
+async function viewItem() {
+  let homedir = await os.homedir();
+  console.log(
+    `Format: ${chalk.blue("School")} / ${chalk.green(
+      "Term <number>"
+    )} / ${chalk.yellow("<Subject>")} / ${chalk.red(
+      "<Unit>"
+    )} / <Assignments|Finished>`
+  );
+  let stuff = await shell
+    .exec(
+      `find ${getDirectoryPath("").slice(0, -1)} -type d  -not -path '*/\.*';`,
+      { silent: true }
+    )
+    .stdout.split("\n")
+    .slice(0, -1);
+  stuff.map(path => {
+    let tempPath = path
+      .replace(homedir + "/Documents", "")
+      .substring(1)
+      .split("/");
+    tempPath.map((folder, index) => {
+      if (index == 0) {
+        tempPath[index] = chalk.blue(folder);
+      }
+      if (index == 1) {
+        tempPath[index] = chalk.green(folder);
+      }
+      if (index == 2) {
+        tempPath[index] = chalk.yellow(folder);
+      }
+      if (index == 3) {
+        tempPath[index] = chalk.red(folder);
+      }
     });
-  }
+    console.log(tempPath.join("/"));
+    return tempPath;
+  });
 }
 
 module.exports = {

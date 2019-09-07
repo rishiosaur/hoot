@@ -1,7 +1,9 @@
 const { verifyDirectory } = require("../../util/verifyDirectory")
 const { makeDirectory } = require("../../util/makeDirectory")
+const { getDirectory } = require("../../util/getDirectory")
 const { writeFile } = require("fs");
 const { getDirectoryPath } = require("../../util/getDirectoryPath")
+const { askForDirectory } = require("../../util/askForDirectory")
 const chalk = require("chalk")
 const shell = require("shelljs");
 const inquirer = require("inquirer")
@@ -28,15 +30,8 @@ async function makeSubject(name) {
       console.log(chalk.green("Try running ") + chalk.blue("hoot setup"));
       shell.exit(1)
     }
-  
-    if (await verifyDirectory(name, true)) {
-      console.log(
-        chalk.red("ERROR ") + chalk.blue("Subject already exists on file.")
-      );
-      shell.exit(1)
-    }
-  
-    let answers = await inquirer.prompt([
+    let path = await askForDirectory(1,"subject")
+    let {subjectType} = await inquirer.prompt([
       {
         type: "list",
         name: "type",
@@ -45,36 +40,32 @@ async function makeSubject(name) {
       }
     ]);
   
-    console.log(
-      chalk.blue(
-        `Just to confirm, you want to make a subject called ${name}, of type ${
-          answers.type
-        }?`
-      )
-    );
-  
-    let answers2 = await inquirer.prompt({
+    if (await verifyDirectory(`${path}/${name}`, true)) {
+        console.log(
+          chalk.red("ERROR ") + chalk.blue("Subject already exists on file.")
+        );
+        shell.exit(1)
+    }
+    let writeConfirmation = await inquirer.prompt({
       type: "confirm",
       name: "confirm",
-      messsage: chalk.blue(
+      message: chalk.blue(
         `Just to confirm, you want to make a subject called ${name}, of type ${
-          answers.subject
+          subjectType
         }?`
       ),
       default: true
     });
   
-    if (!answers2.confirm) {
+    if (!writeConfirmation.confirm) {
       console.log("That's fine, bye!");
       shell.exit(1)
     }
   
     console.log("Alright, let's go!");
-    await makeDirectory(name)
-    console.log("Subject created.");
-    await makeDirectory(`${name}/Finished`)
-    console.log("Created finished assignments folder.")
-    await writeSubjectRC(name, answers.type);
+    await makeDirectory(`${path}/${name}`)
+    console.log("Subject created.")
+    await writeSubjectRC(`${path}/${name}`, subjectType);
     console.log(chalk.blue("Hoot.json created. You're all set!"));
   }
 
