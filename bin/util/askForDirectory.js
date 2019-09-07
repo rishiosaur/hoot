@@ -63,7 +63,7 @@ async function askForDirectory(level, use) {
 
   if (level > 3) {
       assignmentChoices = await getDirectory(
-          joinPath([termChoice.answer,subjectChoice.answer,unitChoice.answer])
+          joinPath([termChoice.answer,subjectChoice.answer,unitChoice.answer,"Assignments"])
       )
 
       if(assignmentChoices.length == 0) {
@@ -75,7 +75,7 @@ async function askForDirectory(level, use) {
         shell.exit(1);
     }
     assignmentChoice = await askDirectoryName("assignment", use, assignmentChoices);
-    finalPath.push(assignmentChoice.answer);
+    finalPath.push("Assignments/"+assignmentChoice.answer);
   }
   
   return joinPath(finalPath)
