@@ -7,6 +7,7 @@ const { makeSubject } = require("./commands/subjects/makeSubject")
 const { finishAssignment } = require("./commands/assignments/finishAssignment")
 const { viewItem } = require("./commands/utility/viewItem")
 const { makeUnit } = require("./commands/units/makeUnit")
+const { newItem } = require("./commands/utility/newItem")
 
 program
   .command("assignment <title>")
@@ -42,6 +43,12 @@ program
   .alias("v")
   .description("Lists your unfinished assignments or your subjects.")
   .action(viewItem)
+
+program
+  .command("new")
+  .alias("n")
+  .description("Create a new assignment, subject, unit, note, or piece of homework.")
+  .action(newItem)
 
 program.parse(process.argv);
 if (process.argv.length < 3) {
