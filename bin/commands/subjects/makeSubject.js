@@ -65,7 +65,7 @@ async function makeSubject(name) {
     console.log("Alright, let's go!");
     await makeDirectory(`${path}/${name}`)
     console.log("Subject created.")
-    await writeSubjectRC(`${path}/${name}`, subjectType.type);
+    await writeSubjectRC(`${path}/${name}`, subjectType);
     console.log(chalk.blue("Hoot.json created. You're all set!"));
   }
 
