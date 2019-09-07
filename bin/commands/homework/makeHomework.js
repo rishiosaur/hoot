@@ -11,59 +11,46 @@ const inquirer = require("inquirer");
 const { writeFile } = require("fs");
 const copyDir = require("copy-dir");
 
-async function makeAssignment(name) {
+async function makeHomework(name) {
+  inquirer.registerPrompt('datetime', require('inquirer-datepicker-prompt'))
   await verifyCmd("git");
-  await verifyCmd("npm");
-
+  await verifyCmd("npm")
   console.log(
-    chalk.green(`Alright, let's make your assignment called: ${name}`)
+    chalk.green(`Alright, let's make your homework called: ${name}`)
   );
-  let path = await askForDirectory(3, "assignment");
+  let {date} = await inquirer.prompt([
+    {
+      type: 'datetime',
+      name: 'date',
+      message: 'What date was this homework given?'
+    }
+  ])
 
-  let templateP = await getGlobalPath(
-    `/hoot-cli/templates/`
-  ).catch(err => console.log(err));
-  let templates = await shell.cd(templateP)
+  name = date + name
+  
+  let path = await askForDirectory(3, "piece of homework");
 
-  if (await verifyDirectory(`${path}/Assignments/${name}`, true)) {
+  if (await verifyDirectory(`${path}/Homework/${name}`, true)) {
     console.log(
-      chalk.red("ERROR ") + chalk.blue("Assignment already exists on file.")
+      chalk.red("ERROR ") + chalk.blue("Homework already exists on file.")
     );
     shell.exit(1);
   }
 
-  await makeDirectory(`${path}/Assignments/${name}`);
-  console.log("Assignment folder created.");
-  let assignmentRCJSON = {};
-  assignmentRCJSON.name = answers.subject;
-  await writeFile(
-    getDirectoryPath(`${path}/Assignments/${name}/hoot.json`),
-    JSON.stringify(assignmentRCJSON),
-    function(err) {
-      if (err) return console.log(err);
-      console.log(JSON.stringify(assignmentRCJSON));
-      console.log(
-        "Writing to " + getDirectoryPath(`${path}/Assignments/${name}/hoot.json`)
-      );
-    }
-  );
-  console.log("hoot.json written.");
-  if (answers.research) {
-    await makeDirectory(`${path}/Assignments/${name}/research`);
-    console.log("Research folder created.");
-  }
+  await makeDirectory(`${path}/Homework/${name}`);
+  console.log("Homework folder created.")
   let templateToCopy = await getGlobalPath(
-    `/hoot-cli/templates/${answers.type.toLowerCase()}`
+    `/hoot-cli/templates/hoot-homework`
   ).catch(err => console.log(err));
   await copyDir(
     templateToCopy,
-    getDirectoryPath(`${path}/Assignments/${name}`),
+    getDirectoryPath(`${path}/Homework/${name}`),
     {},
     function(err) {
       if (err) {
         console.error(err);
       } else {
-        console.log("Copied " + answers.type + " folder");
+        console.log("Copied " + "hoot-homework" + " folder");
         shell.cd(getDirectoryPath(`${path}/Assignments/${name}`));
         console.log("Changed directories to assignment");
         console.log("Initializing Git");
@@ -71,17 +58,13 @@ async function makeAssignment(name) {
           shell.echo("Error: Git commit failed");
           shell.exit(1);
         }
-        console.log("Installing NPM packages");
-
-        if (shell.exec("npm install").code !== 0) {
-          shell.echo("Error: NPM install failed");
-          shell.exit(1);
-        }
       }
     }
   ); //copies directory, even if it has subdirectories or files
 }
 
+makeHomework("Thing")
+
 module.exports = {
-  makeAssignment: makeAssignment
+  makeHomework: makeHomework
 };
