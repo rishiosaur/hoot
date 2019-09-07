@@ -1,20 +1,18 @@
-const { getDirectory } = require("../../util/getDirectory");
 const { verifyDirectory } = require("../../util/verifyDirectory");
 const { makeDirectory } = require("../../util/makeDirectory");
 const { verifyCmd } = require("../../util/verifyCmd");
 const { getDirectoryPath } = require("../../util/getDirectoryPath");
 const { getGlobalPath } = require("../../util/getGlobalPath");
 const { askForDirectory } = require("../../util/askForDirectory");
+const dateFormat = require('dateformat');
 const chalk = require("chalk");
 const shell = require("shelljs");
 const inquirer = require("inquirer");
-const { writeFile } = require("fs");
 const copyDir = require("copy-dir");
 
 async function makeHomework(name) {
   inquirer.registerPrompt('datetime', require('inquirer-datepicker-prompt'))
   await verifyCmd("git");
-  await verifyCmd("npm")
   console.log(
     chalk.green(`Alright, let's make your homework called: ${name}`)
   );
@@ -22,11 +20,13 @@ async function makeHomework(name) {
     {
       type: 'datetime',
       name: 'date',
-      message: 'What date was this homework given?'
+      message: 'What date was this homework given?',
+      format: ['m', '/', 'd', '/', 'yy', ' ']
     }
   ])
 
-  name = date + name
+  date = dateFormat(date, "mmmm dS yyyy ");
+  name = name + " @ " + date
   
   let path = await askForDirectory(3, "piece of homework");
 
@@ -51,7 +51,7 @@ async function makeHomework(name) {
         console.error(err);
       } else {
         console.log("Copied " + "hoot-homework" + " folder");
-        shell.cd(getDirectoryPath(`${path}/Assignments/${name}`));
+        shell.cd(getDirectoryPath(`${path}/Homework/${name}`));
         console.log("Changed directories to assignment");
         console.log("Initializing Git");
         if (shell.exec("git init").code !== 0) {
