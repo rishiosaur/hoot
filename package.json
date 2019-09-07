@@ -20,6 +20,7 @@
     "figlet": "^1.2.3",
     "fs-extra": "^8.1.0",
     "inquirer": "^6.5.1",
+    "inquirer-datepicker-prompt": "^0.4.2",
     "ncp": "^2.0.0",
     "shelljs": "^0.8.3"
   },
