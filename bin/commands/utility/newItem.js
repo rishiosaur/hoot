@@ -1,6 +1,8 @@
 const {makeSubject} = require("../subjects/makeSubject")
 const {makeAssignment} = require("../assignments/makeAssignment")
 const {makeUnit} = require("../units/makeUnit")
+const {makeHomework} = require("../homework/makeHomework")
+const {makeNote} = require("../notes/makeNote")
 
 function validateItem(item) {
     let lowercaseItem = item.toLowerCase();
@@ -8,6 +10,8 @@ function validateItem(item) {
     arrayToMatch.push("a", "assignment")
     arrayToMatch.push("u", "unit")
     arrayToMatch.push("s", "subject")
+    arrayToMatch.push("hw", "homework")
+    arrayToMatch.push("n", "note")
     if (arrayToMatch.includes(lowercaseItem)) {
       return true
     } else {
@@ -39,6 +43,14 @@ async function newItem (item, name){
         case "u":
         case "unit":
             await makeUnit(name)
+            break
+        case "hw":
+        case "homework":
+            await makeHomework(name)
+            break
+        case "n":
+        case "note":
+            await makeNote(name)
             break
     }
 }
