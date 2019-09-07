@@ -41,6 +41,12 @@ async function makeUnit(name) {
     console.log("Alright, let's go!");
     await makeDirectory(path+"/"+name)
     console.log("Unit created.")
+    await makeDirectory(path+"/"+name+"/Assignments")
+    console.log("Assignment folder created.")
+    await makeDirectory(path+"/"+name+"/Notes")
+    console.log("Note folder created.")
+    await makeDirectory(path+"/"+name+"/Homework")
+    console.log("HW folder created.")
 }
 
 module.exports = {

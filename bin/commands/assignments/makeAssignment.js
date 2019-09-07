@@ -41,31 +41,31 @@ async function makeAssignment(name) {
     }
   ]);
 
-  if (await verifyDirectory(`${path}/${name}`, true)) {
+  if (await verifyDirectory(`${path}/Assignments/${name}`, true)) {
     console.log(
       chalk.red("ERROR ") + chalk.blue("Assignment already exists on file.")
     );
     shell.exit(1);
   }
 
-  await makeDirectory(`${path}/${name}`);
+  await makeDirectory(`${path}/Assignments/${name}`);
   console.log("Assignment folder created.");
   let assignmentRCJSON = {};
   assignmentRCJSON.name = answers.subject;
   await writeFile(
-    getDirectoryPath(`${path}/${name}/hoot.json`),
+    getDirectoryPath(`${path}/Assignments/${name}/hoot.json`),
     JSON.stringify(assignmentRCJSON),
     function(err) {
       if (err) return console.log(err);
       console.log(JSON.stringify(assignmentRCJSON));
       console.log(
-        "Writing to " + getDirectoryPath(`${path}/${name}/hoot.json`)
+        "Writing to " + getDirectoryPath(`${path}/Assignments/${name}/hoot.json`)
       );
     }
   );
   console.log("hoot.json written.");
   if (answers.research) {
-    await makeDirectory(`${path}/${name}/research`);
+    await makeDirectory(`${path}/Assignments/${name}/research`);
     console.log("Research folder created.");
   }
   let templateToCopy = await getGlobalPath(
@@ -73,14 +73,14 @@ async function makeAssignment(name) {
   ).catch(err => console.log(err));
   await copyDir(
     templateToCopy,
-    getDirectoryPath(`${path}/${name}`),
+    getDirectoryPath(`${path}/Assignments/${name}`),
     {},
     function(err) {
       if (err) {
         console.error(err);
       } else {
         console.log("Copied " + answers.type + " folder");
-        shell.cd(getDirectoryPath(`${path}/${name}`));
+        shell.cd(getDirectoryPath(`${path}/Assignments/${name}`));
         console.log("Changed directories to assignment");
         console.log("Initializing Git");
         if (shell.exec("git init").code !== 0) {
