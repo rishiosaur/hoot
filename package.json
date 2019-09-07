@@ -17,9 +17,11 @@
     "chalk": "^2.4.2",
     "commander": "^3.0.0",
     "copy-dir": "^1.1.0",
+    "dateformat": "^3.0.3",
     "figlet": "^1.2.3",
     "fs-extra": "^8.1.0",
     "inquirer": "^6.5.1",
+    "inquirer-datepicker-prompt": "^0.4.2",
     "ncp": "^2.0.0",
     "shelljs": "^0.8.3"
   },

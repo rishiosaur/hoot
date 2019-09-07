@@ -4,14 +4,16 @@ const { writeFile, unlinkSync } = require("fs")
 const { move } = require("fs-extra")
 const { verifyDirectory } = require("../../util/verifyDirectory")
 const { makeDirectory } = require("../../util/makeDirectory")
+const { askForDirectory } = require("../../util/askForDirectory")
 
-async function finishAssignment(subject,assignment){
-    let path = `${subject}/${assignment}`
+async function finishAssignment(){
+    let path = await askForDirectory(4, "finished assignment")
+    console.log(path)
     let pathToAssignmentJSON = getDirectoryPath(`${path}/hoot.json`)
     await verifyDirectory(path)
-    await makeDirectory(`${path}/mark`)
     let assignmentHootJSON = require(pathToAssignmentJSON)
     
+    let splitPath = path.split("/")
     let answers = await inquirer.prompt([
         {
             message: "What was your mark for this assignment?",
@@ -27,8 +29,8 @@ async function finishAssignment(subject,assignment){
         console.log('Writing to ' + pathToAssignmentJSON);
         console.log("I'll now move this assignment to the finished folder.")
     });
-    await move(getDirectoryPath(path), getDirectoryPath(`${subject}/Finished/${assignment}`))
-    console.log(`Moved ${subject}/${assignment} to ${subject}/Finished/${assignment}`)
+    await move(getDirectoryPath(path), getDirectoryPath(`${splitPath.slice(0,-1).join("/")}/Finished/${splitPath.pop()}`))
+    console.log(`Finished.`)
 }
 
 module.exports = {
