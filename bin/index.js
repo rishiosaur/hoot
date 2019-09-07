@@ -38,7 +38,7 @@ program
   .action(makeUnit)
 
 program
-  .command("view <assignments|subjects>")
+  .command("view")
   .alias("v")
   .description("Lists your unfinished assignments or your subjects.")
   .action(viewItem)
