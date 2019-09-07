@@ -15,14 +15,33 @@ async function viewItem() {
   );
   let stuff = await shell
     .exec(
-      `find ${getDirectoryPath("").slice(
-        0,
-        -1
-      )} -type d  -not -path '*/\.*' | sort;`,
+      `find ${getDirectoryPath("").slice(0, -1)} -type d  -not -path '*/\.*';`,
       { silent: true }
     )
     .stdout.split("\n")
     .slice(0, -1);
+  stuff.map(path => {
+    let tempPath = path
+      .replace(homedir + "/Documents", "")
+      .substring(1)
+      .split("/");
+    tempPath.map((folder, index) => {
+      if (index == 0) {
+        tempPath[index] = chalk.blue(folder);
+      }
+      if (index == 1) {
+        tempPath[index] = chalk.green(folder);
+      }
+      if (index == 2) {
+        tempPath[index] = chalk.yellow(folder);
+      }
+      if (index == 3) {
+        tempPath[index] = chalk.red(folder);
+      }
+    });
+    console.log(tempPath.join("/"));
+    return tempPath;
+  });
 }
 
 module.exports = {
