@@ -26,7 +26,7 @@ async function makeHomework(name) {
   ])
 
   date = dateFormat(date, "mmmm dS yyyy ");
-  name = name + " @ " + date
+  name = name + ", on " + date
   
   let path = await askForDirectory(3, "piece of homework");
 
@@ -55,15 +55,13 @@ async function makeHomework(name) {
         console.log("Changed directories to assignment");
         console.log("Initializing Git");
         if (shell.exec("git init").code !== 0) {
-          shell.echo("Error: Git commit failed");
+          shell.echo("Error: Git init failed");
           shell.exit(1);
         }
       }
     }
   ); //copies directory, even if it has subdirectories or files
 }
-
-makeHomework("Thing")
 
 module.exports = {
   makeHomework: makeHomework
