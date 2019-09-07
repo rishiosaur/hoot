@@ -1,0 +1,82 @@
+\documentclass[]{article}
+\usepackage{graphicx}	
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{subfiles}
+\usepackage{geometry}
+\usepackage{braket}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=cyan,      
+    urlcolor=cyan,
+    pdftitle={Your title here},
+}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\usepackage{pgfplots}
+
+\usepackage{arev}
+
+\usepackage{fontspec}
+    \setmainfont{SF Pro Text Regular}
+    \setmonofont{Fira Mono}
+
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\huge}
+  {\bfseries\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+\titleformat{\section}
+    {\normalfont\Large}
+    {\thesection}{1em}{}
+
+\titleformat{\subsection}
+    {\normalfont\itshape\large}
+    {\thesubsection}{1em}{}
+
+\definecolor{codegreen}{rgb}{0.3,0.3,0.3}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.69,0.69,0.69}
+ 
+\lstdefinestyle{mystyle}{ 
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codegreen}\normalfont,
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,   
+	tabsize=2,
+    basicstyle=\ttfamily
+}
+ 
+\lstset{style=mystyle}
+
+
+\usepackage{titling}
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null}
+
+\title{\Huge Title of Report}
+\author{\LARGE Your name here}
+\date{}
+
+\geometry{margin=1in}
+
+\begin{document}
+\pagenumbering{gobble}
+\maketitle
+
+\pagenumbering{arabic}
+
+\section[Sample]{Sample TOC}
+
+\end{document}  
