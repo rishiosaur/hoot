@@ -21,6 +21,7 @@ async function askForDirectory(level, use) {
   var termChoices, termChoice;
   var subjectChoices, subjectChoice;
   var unitChoices, unitChoice;
+  var assignmentChoices, assignmentChoice;
 
   termChoices = await getDirectory("");
   termChoice = await askDirectoryName("term", use, termChoices);
@@ -47,7 +48,7 @@ async function askForDirectory(level, use) {
       joinPath([termChoice.answer, subjectChoice.answer])
     );
 
-    if (unitChoices.length == 0) {
+    if (unitChoices.filter(folder=>folder!="Finished").length == 0) {
         console.log(
           chalk.red("ERROR ") +
             chalk.blue("You do not have any units. Try running ") +
@@ -57,7 +58,24 @@ async function askForDirectory(level, use) {
     }
 
     unitChoice = await askDirectoryName("unit", use, unitChoices);
-    finalPath.push(unitChoice.answer);console.log(finalPath)
+    finalPath.push(unitChoice.answer);
+  }
+
+  if (level > 3) {
+      assignmentChoices = await getDirectory(
+          joinPath([termChoice.answer,subjectChoice.answer,unitChoice.answer])
+      )
+
+      if(assignmentChoices.length == 0) {
+        console.log(
+          chalk.red("ERROR ") +
+            chalk.blue("You do not have any subjects. Try running ") +
+            chalk.green("hoot subject <name>")
+        );
+        shell.exit(1);
+    }
+    assignmentChoice = await askDirectoryName("assignment", use, assignmentChoices);
+    finalPath.push(assignmentChoice.answer);
   }
   
   return joinPath(finalPath)
