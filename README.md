@@ -9,7 +9,7 @@ The assignment tracking system for tech-savvy students.
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/894a4dd7f89943e0899eb85dd1a8284a)](https://www.codacy.com/manual/rishiosaur/hoot-cli?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rishiosaur/hoot-cli&amp;utm_campaign=Badge_Grade)
 
 
-[![asciicast](https://asciinema.org/a/266563.svg)](https://asciinema.org/a/266563)
+<script id="asciicast-266563" src="https://asciinema.org/a/266563.js" async></script>
 
 ## Usage
 
