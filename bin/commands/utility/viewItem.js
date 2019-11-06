@@ -13,14 +13,14 @@ async function viewItem() {
       "<Unit>"
     )} / <Assignments|Notes|Homework> / <Assignments ? Finished+<Name> : <Name>>`
   );
-  let stuff = await shell
+  let sh = await shell
     .exec(
       `find ${getDirectoryPath("").slice(0, -1)} -type d  -not -path '*/\.*';`,
       { silent: true }
     )
     .stdout.split("\n")
     .slice(0, -1);
-  stuff.map(path => {
+  sh.map(path => {
     let tempPath = path
       .replace(homedir + "/Documents", "")
       .substring(1)
