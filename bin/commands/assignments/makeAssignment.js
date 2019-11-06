@@ -20,12 +20,12 @@ async function makeAssignment(name) {
   );
   let path = await askForDirectory(3, "assignment");
 
-  let templateP = await getGlobalPath(
-    `/hoot-cli/templates/`
-  ).catch(err => console.log(err));
-  let templates = await shell.cd(templateP)
-  templates = await shell.exec("ls").stdout
-  templates = templates.split("\n").slice(0, -1)
+  let templateP = await getGlobalPath(`/hoot-cli/templates/`).catch(err =>
+    console.log(err)
+  );
+  let templates = await shell.cd(templateP);
+  templates = await shell.exec("ls").stdout;
+  templates = templates.split("\n").slice(0, -1);
   let answers = await inquirer.prompt([
     {
       type: "list",
@@ -59,7 +59,8 @@ async function makeAssignment(name) {
       if (err) return console.log(err);
       console.log(JSON.stringify(assignmentRCJSON));
       console.log(
-        "Writing to " + getDirectoryPath(`${path}/Assignments/${name}/hoot.json`)
+        "Writing to " +
+          getDirectoryPath(`${path}/Assignments/${name}/hoot.json`)
       );
     }
   );
@@ -93,6 +94,7 @@ async function makeAssignment(name) {
           shell.echo("Error: NPM install failed");
           shell.exit(1);
         }
+        console.log(getDirectoryPath(`${path}/Assignments/${name}`).replace(/ /g, "\\ "))
       }
     }
   ); //copies directory, even if it has subdirectories or files

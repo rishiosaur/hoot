@@ -11,7 +11,7 @@ async function viewItem() {
       "Term <number>"
     )} / ${chalk.yellow("<Subject>")} / ${chalk.red(
       "<Unit>"
-    )} / <Assignments|Finished>`
+    )} / <Assignments|Notes|Homework> / <Assignments ? Finished+<Name> : <Name>>`
   );
   let stuff = await shell
     .exec(
@@ -38,9 +38,13 @@ async function viewItem() {
       if (index == 3) {
         tempPath[index] = chalk.red(folder);
       }
+      if(folder == "node_modules") {
+        tempPath = ""
+      }
     });
-    console.log(tempPath.join("/"));
-    return tempPath;
+  tempPath.length > 0 ? console.log(tempPath.join("/")): ""
+  return tempPath;
+  
   });
 }
 
