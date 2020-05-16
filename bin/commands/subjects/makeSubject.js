@@ -8,19 +8,14 @@ const chalk = require("chalk")
 const shell = require("shelljs");
 const inquirer = require("inquirer")
 
-async function writeSubjectRC(subjectName, subjectType) {
-    let string =
-      "{\n" +
-      "'name':" +
-      subjectName +
-      ",\n" +
-      "'type':" +
-      subjectType +
-      ",\n" +
-      "}";
-    writeFile(getDirectoryPath(`${subjectName}/hoot.json`),
-      string,
-      err => console.log(err ? err : "")
+function writeSubjectRC(subjectName, subjectType) {
+  let rc = {
+    name: subjectName,
+    type: subjectType
+  }
+    writeFileSync(getDirectoryPath(`${subjectName}/hoot.json`),
+      JSON.stringify(rc,null,2),
+      writeError
     );
   }
 
