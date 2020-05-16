@@ -1,5 +1,6 @@
 const { verifyDirectory } = require("../../util/verifyDirectory")
 const { makeDirectory } = require("../../util/makeDirectory")
+const { writeStatus, writeError } = require("../../util/messages")
 const chalk = require("chalk")
 const shell = require("shelljs");
 const figlet = require('figlet')
@@ -8,9 +9,7 @@ const os = require("os")
 
 async function makeSchool() {
     if (await verifyDirectory("", true)) {
-      console.log(
-        chalk.red("ERROR: ") + chalk.blue("You already have a school folder.")
-      );
+      writeError(chalk.blue("You already have a school folder.");
       console.log(
         chalk.green("Note: ") +
           chalk.blue("hoot setup ") +
@@ -56,9 +55,11 @@ async function makeSchool() {
         name: "program"
       },
     ]);
+
     console.log(answers.make ? "Great!" : "Ok, bye!");
   
     await makeDirectory("");
+    
     if (answers.other) {
       await makeDirectory("/other");
     }
@@ -69,6 +70,7 @@ async function makeSchool() {
     
     let numberOfTerms = answers.terms
     console.log(`Creating ${numberOfTerms} terms.`)
+
     for (let index = 0; index < numberOfTerms; index++) {
       await makeDirectory(`Term ${index+1}`)
     }
