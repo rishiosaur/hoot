@@ -15,7 +15,14 @@ async function askDirectoryName(level, use, choices) {
   return answers;
 }
 
-async function askForDirectory(level, use) {
+/**
+ * Asks the user for the path to a given directory through a series of questions.
+ *
+ * @param {number} level The level up to which you'd like to ask. 1 - subject, 2 - unit, 3 - assignments
+ * @param {string} use The place that this directory path will be used.
+ * @returns
+ */
+function askForDirectoryPath(level, use) {
   let finalPath = [];
 
   var termChoices, termChoice;
