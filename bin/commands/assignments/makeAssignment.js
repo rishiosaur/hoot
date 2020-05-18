@@ -5,10 +5,11 @@ const { verifyCmd } = require("../../util/verifyCmd");
 const { getDirectoryPath } = require("../../util/getDirectoryPath");
 const { getGlobalPath } = require("../../util/getGlobalPath");
 const { askForDirectory } = require("../../util/askForDirectory");
+const { writeError, writeStatus } = require("../../util/messages");
 const chalk = require("chalk");
 const shell = require("shelljs");
 const inquirer = require("inquirer");
-const { writeFile } = require("fs");
+const { writeFileSync } = require("fs");
 const copyDir = require("copy-dir");
 
 async function makeAssignment(name) {
@@ -24,6 +25,7 @@ async function makeAssignment(name) {
     verifyCmd("git"),
     verifyCmd("npm")
   ])
+
   console.log(
     chalk.green(`Alright, let's make your assignment called: ${name}`)
   );
@@ -49,7 +51,7 @@ async function makeAssignment(name) {
     },
     {
       type: "confirm",
-      name: "research",
+      name: "makeResearchFolder",
       message: "Add research folder",
       default: true
     }
@@ -86,7 +88,7 @@ async function makeAssignment(name) {
       // console.log(JSON.stringify(assignmentRCJSON));
       writeStatus(
         "Writing to " +
-          getDirectoryPath(`${path}/Assignments/${name}/hoot.json`)
+        getDirectoryPath(`${path}/Assignments/${name}/hoot.json`)
       );
     }
   );
