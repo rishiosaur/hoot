@@ -27,6 +27,12 @@ async function makeAssignment(name) {
   console.log(
     chalk.green(`Alright, let's make your assignment called: ${name}`)
   );
+
+
+  //
+  // USER INPUTS
+  //
+
   let path = await askForDirectory(3, "assignment");
 
   let templateP = await getGlobalPath(`/hoot-cli/templates/`).catch(err =>
