@@ -90,14 +90,18 @@ async function makeAssignment(name) {
       );
     }
   );
-  console.log("hoot.json written.");
-  if (answers.research) {
+
+  writeStatus("Hoot.json created.")
+
+  if (answers.makeResearchFolder) {
     await makeDirectory(`${path}/Assignments/${name}/research`);
     console.log("Research folder created.");
   }
-  let templateToCopy = await getGlobalPath(
+
+  const templatePath = await getGlobalPath(
     `/hoot-cli/templates/${answers.type.toLowerCase()}`
   ).catch(err => console.log(err));
+
   // Copies the selected template to the assignment folder.
   copyDir(
     // Global path to copy
