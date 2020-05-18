@@ -43,6 +43,7 @@ async function makeSubject(name) {
         writeError("This subject already exists on disk.")
         shell.exit(1)
     }
+    
     let writeConfirmation = await inquirer.prompt({
       type: "confirm",
       name: "confirm",
