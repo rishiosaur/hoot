@@ -18,10 +18,10 @@ function validateItem(item) {
       return true
     } else {
       writeError(chalk.blue(
-            "Invalid input for " +
-              chalk.green("hoot new\n") +
-              chalk.blue("Try running ") +
-              chalk.green("hoot new assignment sample")
+        "Invalid input for " +
+          chalk.green("hoot new\n") +
+          chalk.blue("Try running ") +
+          chalk.green("hoot new assignment sample")
       ))
       shell.exit(1);
     }
