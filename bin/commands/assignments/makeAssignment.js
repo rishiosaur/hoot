@@ -55,10 +55,8 @@ async function makeAssignment(name) {
     }
   ]);
 
-  if (await verifyDirectory(`${path}/Assignments/${name}`, true)) {
-    console.log(
-      chalk.red("ERROR ") + chalk.blue("Assignment already exists on file.")
-    );
+  if (verifyDirectory(`${path}/Assignments/${name}`, true)) {
+    writeError("Assignment already exists on disk.");
     shell.exit(1);
   }
 
