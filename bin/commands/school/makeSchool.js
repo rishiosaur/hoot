@@ -9,7 +9,7 @@ const os = require("os")
 
 async function makeSchool() {
     if (await verifyDirectory("", true)) {
-      writeError(chalk.blue("You already have a school folder.");
+      writeError(chalk.blue("You already have a school folder."));
       console.log(
         chalk.green("Note: ") +
           chalk.blue("hoot setup ") +
