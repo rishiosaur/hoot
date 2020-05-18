@@ -6,6 +6,14 @@ const shell = require("shelljs");
 const chalk = require("chalk");
 const inquirer = require("inquirer");
 
+/**
+ * A utility function for askForDirectoryPath. This just asks for a singular 
+ *
+ * @param {*} level
+ * @param {*} use
+ * @param {*} choices
+ * @returns
+ */
 async function askDirectoryName(level, use, choices) {
   let answers = await inquirer.prompt({
     type: "list",
@@ -23,7 +31,7 @@ async function askDirectoryName(level, use, choices) {
  * @param {string} use The place that this directory path will be used.
  * @returns
  */
-function askForDirectoryPath(level, use) {
+async function askForDirectoryPath(level, use) {
   let finalPath = [];
 
   var unitChoices, unitChoice;
