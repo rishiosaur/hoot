@@ -98,32 +98,49 @@ async function makeAssignment(name) {
   let templateToCopy = await getGlobalPath(
     `/hoot-cli/templates/${answers.type.toLowerCase()}`
   ).catch(err => console.log(err));
-  await copyDir(
-    templateToCopy,
+  // Copies the selected template to the assignment folder.
+  copyDir(
+    // Global path to copy
+    templatePath,
+
+    // Path to school subdirectory
     getDirectoryPath(`${path}/Assignments/${name}`),
+
+    // No options
     {},
-    function(err) {
+
+    // Because this is not a promise-based async function call, callbacks are required.
+    function (err) {
       if (err) {
-        console.error(err);
+        writeError(err);
+        shell.exit(1)
       } else {
-        console.log("Copied " + answers.type + " folder");
+
+        writeStatus("Copied " + answers.type + " folder");
         shell.cd(getDirectoryPath(`${path}/Assignments/${name}`));
-        console.log("Changed directories to assignment");
-        console.log("Initializing Git");
+        writeStatus("Changed directories to assignment");
+
+        // Initializing all the version control and package management systems
+
+        writeStatus("Initializing Git");
+
         if (shell.exec("git init").code !== 0) {
           shell.echo("Error: Git commit failed");
           shell.exit(1);
         }
-        console.log("Installing NPM packages");
+
+        writeStatus("Installing NPM packages");
 
         if (shell.exec("npm install").code !== 0) {
+          // We can run npm install even if there is no package.json, reducing a large amount of bloating.
           shell.echo("Error: NPM install failed");
           shell.exit(1);
         }
-        console.log(getDirectoryPath(`${path}/Assignments/${name}`).replace(/ /g, "\\ "))
+
+        console.log("Your assignment is stored at: " + chalk.blue(getDirectoryPath(`${path}/Assignments/${name}`).replace(/ /g, "\\ ")))
       }
     }
-  ); //copies directory, even if it has subdirectories or files
+  );
 }
 
 module.exports = {
