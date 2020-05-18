@@ -12,9 +12,18 @@ const { writeFile } = require("fs");
 const copyDir = require("copy-dir");
 
 async function makeAssignment(name) {
-  await verifyCmd("git");
-  await verifyCmd("npm");
 
+  //
+  // INITIAL SETUP
+  //
+
+  const templatePath = await getGlobalPath(`/hoot-cli/templates/`);
+
+  // Making sure that all of the useful commands are available concurrently
+  await Promise.all([
+    verifyCmd("git"),
+    verifyCmd("npm")
+  ])
   console.log(
     chalk.green(`Alright, let's make your assignment called: ${name}`)
   );
