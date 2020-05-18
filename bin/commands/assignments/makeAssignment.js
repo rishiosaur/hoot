@@ -74,12 +74,17 @@ async function makeAssignment(name) {
   //
   // APPLICATION LOGIC
   //
+
+  // Blocking filesystem requests are faster than asynchronous ones.
+  writeFileSync(
     getDirectoryPath(`${path}/Assignments/${name}/hoot.json`),
+
     JSON.stringify(assignmentRCJSON),
-    function(err) {
-      if (err) return console.log(err);
-      console.log(JSON.stringify(assignmentRCJSON));
-      console.log(
+
+    (err) => {
+      if (err) return write;
+      // console.log(JSON.stringify(assignmentRCJSON));
+      writeStatus(
         "Writing to " +
           getDirectoryPath(`${path}/Assignments/${name}/hoot.json`)
       );
