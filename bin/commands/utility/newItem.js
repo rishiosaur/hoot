@@ -3,6 +3,8 @@ const {makeAssignment} = require("../assignments/makeAssignment")
 const {makeUnit} = require("../units/makeUnit")
 const {makeHomework} = require("../homework/makeHomework")
 const {makeNote} = require("../notes/makeNote")
+const {writeError} = require("../../util/messages")
+const chalk = require("chalk")
 
 function validateItem(item) {
     let lowercaseItem = item.toLowerCase();
@@ -15,15 +17,12 @@ function validateItem(item) {
     if (arrayToMatch.includes(lowercaseItem)) {
       return true
     } else {
-      console.log(
-        chalk.red("ERROR: ") +
-          chalk.blue(
+      writeError(chalk.blue(
             "Invalid input for " +
               chalk.green("hoot new\n") +
               chalk.blue("Try running ") +
               chalk.green("hoot new assignment sample")
-          )
-      );
+      ))
       shell.exit(1);
     }
   }
