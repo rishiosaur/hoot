@@ -35,12 +35,11 @@ async function makeAssignment(name) {
 
   let path = await askForDirectory(3, "assignment");
 
-  let templateP = await getGlobalPath(`/hoot-cli/templates/`).catch(err =>
-    console.log(err)
-  );
-  let templates = await shell.cd(templateP);
-  templates = await shell.exec("ls").stdout;
-  templates = templates.split("\n").slice(0, -1);
+  let templates = shell.cd(templatePath);
+
+  // Once the shell has changed directories into 
+  templates = (shell.exec("ls").stdout).split("\n").slice(0, -1);
+
   let answers = await inquirer.prompt([
     {
       type: "list",
