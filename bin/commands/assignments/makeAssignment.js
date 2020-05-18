@@ -70,6 +70,10 @@ async function makeAssignment(name) {
     completed: false,
     mark: 0
   };
+
+  //
+  // APPLICATION LOGIC
+  //
     getDirectoryPath(`${path}/Assignments/${name}/hoot.json`),
     JSON.stringify(assignmentRCJSON),
     function(err) {
