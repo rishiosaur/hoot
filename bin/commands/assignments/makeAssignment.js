@@ -60,11 +60,16 @@ async function makeAssignment(name) {
     shell.exit(1);
   }
 
+  // Creates assignment directory
   await makeDirectory(`${path}/Assignments/${name}`);
-  console.log("Assignment folder created.");
-  let assignmentRCJSON = {};
-  assignmentRCJSON.name = answers.subject;
-  await writeFile(
+
+  writeStatus("Assignment folder created.");
+
+  let assignmentRCJSON = {
+    name: name,
+    completed: false,
+    mark: 0
+  };
     getDirectoryPath(`${path}/Assignments/${name}/hoot.json`),
     JSON.stringify(assignmentRCJSON),
     function(err) {
