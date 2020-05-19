@@ -1,7 +1,0 @@
-{
-    "cSpell.words": [
-        "assignment",
-        "rcjson"
-    ],
-    "python.formatting.provider": "black"
-}
