@@ -4,7 +4,8 @@
   "description": "The assignment managing system for tech-savvy students.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "precise-commits": "precise-commits",
+    "precommit": "npm run precise-commits"
   },
   "keywords": [
     "hoot",
@@ -27,5 +28,10 @@
   },
   "bin": {
     "hoot": "./bin/index.js"
+  },
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "precise-commits": "^1.0.2",
+    "prettier": "^2.0.5"
   }
 }
