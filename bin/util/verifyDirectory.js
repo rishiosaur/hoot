@@ -13,6 +13,7 @@ const chalk  = require('chalk')
 function verifyDirectory (subfolder, invert = false) {
     // Formatted path
     let path = getDirectoryPath(subfolder)
+    console.log(path.replace(/\s/g, "\\ "))
     if (existsSync(path)) {
         return true
     } else if(invert) {
