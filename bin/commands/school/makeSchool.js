@@ -83,5 +83,5 @@ async function makeSchool() {
   }
 
 module.exports = {
-    makeSchool : makeSchool
+    makeSchool
 }
