@@ -30,6 +30,9 @@
     "hoot": "./bin/index.js"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-flow": "^7.9.0",
     "husky": "^4.2.5",
     "precise-commits": "^1.0.2",
     "prettier": "^2.0.5"
