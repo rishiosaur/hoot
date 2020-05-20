@@ -29,20 +29,23 @@ const askDirectoryName = (use) => (level) => (choices) => (
  * @returns
  */
 async function askForDirectoryPath(level, use) {
+  // This is the path that everything gets pushed to; all of the custom directories go here.
   let finalPath = [];
 
-  var unitChoices, unitChoice;
-  var subjectChoices, subjectChoice;
-  var assignmentChoices, assignmentChoice;
-  var termChoices, termChoice;
-
+  // To reduce repetition, this curried function saves the use inside its closure.
+  const askDirContext = askDirectoryName(use);
+  
+  // Getting the directory process started.
   termChoices = getDirectory("");
-  termChoice = await askDirectoryName("term", use, termChoices);
+  termChoice = await askDirContext("term")(termChoices);
   finalPath.push(termChoice.answer);
 
-  if (level > 1) {
+  // TODO: Convert argument checking to a for loop, or refactor into a separate function
 
-    subjectChoices = getDirectory(termChoice.answer);
+  // All of the entries are 0-indexed, so the numbers are always one more than what they 'should' be.
+  // Level 1 is full of subjects
+  if (level > 1) {
+    const subjectChoices = getDirectory(termChoice.answer);
 
     if (subjectChoices.length == 0) {
       writeError(chalk.blue("You do not have any subjects. Try running ") +
@@ -50,41 +53,47 @@ async function askForDirectoryPath(level, use) {
       shell.exit(1);
     }
 
-    subjectChoice = await askDirectoryName("subject", use, subjectChoices);
+    const subjectChoice = await askDirContext("subject")(subjectChoices);
     finalPath.push(subjectChoice.answer);
   }
 
+  // Level 2 is full of units
   if (level > 2) {
-
-    unitChoices = getDirectory(
-      joinPath([termChoice.answer, subjectChoice.answer])
+    const unitChoices = getDirectory(
+      joinPath(finalPath)
     );
 
     if (unitChoices.filter(folder => folder != "Finished").length == 0) {
-      writeError(chalk.blue("You do not have any units. Try running ") +
+      writeError(chalk.blue("You do not have any units in this subject. Try running ") +
         chalk.green("hoot new unit <name>"));
       shell.exit(1);
-    }
+    } 
 
-    const { answer } = await askDirectoryName("unit", use, unitChoices);
+    const { answer } = await askDirContext("unit")(unitChoices);
     finalPath.push(answer);
+    
   }
 
+  // Level 3 is full of assignments
   if (level > 3) {
+    finalPath.push("Assignments")
 
     assignmentChoices = getDirectory(
-      joinPath([termChoice.answer, subjectChoice.answer, unitChoice.answer, "Assignments"])
+      joinPath(finalPath)
     )
 
     if (assignmentChoices.length == 0) {
       writeError(chalk.blue("You do not have any subjects. Try running ") +
-      chalk.green("hoot new subject <name>"))
+        chalk.green("hoot new subject <name>"))
       shell.exit(1);
     }
-    assignmentChoice = await askDirectoryName("assignment", use, assignmentChoices);
-    finalPath.push("Assignments/" + assignmentChoice.answer);
+
+    assignmentChoice = await askDirContext(assignments)(assignmentChoices);
+
+    finalPath.push(assignmentChoice.answer);
   }
 
+  console.log(joinPath(finalPath))
   return joinPath(finalPath)
 }
 
