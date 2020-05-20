@@ -14,16 +14,13 @@ const inquirer = require("inquirer");
  * @param {*} choices
  * @returns
  */
-async function askDirectoryName(level, use, choices) {
-  let answers = await inquirer.prompt({
+const askDirectoryName = (use) => (level) => (choices) => (
+   inquirer.prompt({
     type: "list",
     name: "answer",
     message: `What ${level} is this ${use} in?`,
     choices: choices
-  });
-  return answers;
-}
-
+  }))
 /**
  * Asks the user for the path to a given directory through a series of questions.
  *
