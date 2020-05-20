@@ -45,7 +45,7 @@ program
   .action(viewItem)
 
 program
-  .command("new")
+  .command("new <item>")
   .alias("n")
   .description("Create a new assignment, subject, unit, note, or piece of homework.")
   .action(newItem)
