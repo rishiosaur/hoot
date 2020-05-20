@@ -18,8 +18,6 @@ async function makeAssignment(name) {
   // INITIAL SETUP
   //
 
-  const templatePath = await getGlobalPath(`/hoot-cli/templates/`);
-
   // Making sure that all of the useful commands are available concurrently
   await Promise.all([
     verifyCmd("git"),
