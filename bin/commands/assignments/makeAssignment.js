@@ -35,7 +35,7 @@ async function makeAssignment(name) {
 
   let path = await askForDirectory(3, "assignment");
 
-  let templates = shell.cd(templatePath);
+  let templates = shell.cd(await getGlobalPath('/hoot-cli/templates'));
 
   // Once the shell has changed directories into 
   templates = (shell.exec("ls").stdout).split("\n").slice(0, -1);
@@ -135,7 +135,7 @@ async function makeAssignment(name) {
 
         writeStatus("Installing NPM packages");
 
-        if (shell.exec("npm install").code !== 0) {
+        if (shell.exec("npm install", { silent: true, fatal: true }).code !== 0) {
           // We can run npm install even if there is no package.json, reducing a large amount of bloating.
           shell.echo("Error: NPM install failed");
           shell.exit(1);
