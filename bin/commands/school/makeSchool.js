@@ -30,7 +30,8 @@ async function makeSchool() {
   
     console.log("Welcome! It's great to have you.");
     console.log("Let's get you started with Hoot, shall we?");
-    let answers = await inquirer.prompt([
+
+    let { make, terms, other, program } = await inquirer.prompt([
       {
         type: "confirm",
         name: "make",
@@ -56,23 +57,22 @@ async function makeSchool() {
       },
     ]);
 
-    console.log(answers.make ? "Great!" : "Ok, bye!");
+    console.log(make ? "Great!" : "Ok, bye!");
   
     await makeDirectory("");
     
-    if (answers.other) {
+    if (other) {
       await makeDirectory("/other");
     }
 
-    if (answers.program) {
-      await makeDirectory(`/${answers.program}`)
+    if (program) {
+      await makeDirectory(`/${program}`)
     }
     
-    let numberOfTerms = answers.terms
-    console.log(`Creating ${numberOfTerms} terms.`)
+    console.log(`Creating ${terms} terms.`)
 
-    for (let index = 0; index < numberOfTerms; index++) {
-      await makeDirectory(`Term ${index+1}`)
+    for (let index = 0; index < terms; index++) {
+      makeDirectory(`Term ${index+1}`)
     }
   
     console.log(
