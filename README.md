@@ -22,13 +22,8 @@ Alternatively, you can run
 
 `npx hoot <options>`
 
-### Setup
-
-Run:
-
-`hoot setup`
-
-and answer the questions to the best of your abilities.
+#### Setup
+If you have `hoot` installed locally, you can run `hoot setup`, or `npx hoot setup`.
 
 ### Subjects
 

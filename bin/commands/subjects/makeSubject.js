@@ -20,6 +20,7 @@ function writeSubjectRC(subjectName, subjectType) {
 }
 
 async function makeSubject(name) {
+  
     if (!await verifyDirectory("", true)) {
       console.log(chalk.red("ERROR: ") + chalk.blue("School not found"));
       console.log(chalk.green("Try running ") + chalk.blue("hoot setup"));
@@ -27,6 +28,7 @@ async function makeSubject(name) {
     }
 
     let path = await askForDirectory(1,"subject")
+  
 
     let { subjectType } = await inquirer.prompt([
       {
@@ -43,7 +45,7 @@ async function makeSubject(name) {
         writeError("This subject already exists on disk.")
         shell.exit(1)
     }
-    
+
     let writeConfirmation = await inquirer.prompt({
       type: "confirm",
       name: "confirm",
