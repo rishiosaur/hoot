@@ -18,6 +18,10 @@ Hoot is available on the npm registry, so installation is a breeze:
 
 `npm i -g hoot-cli`
 
+Alternatively, you can run
+
+`npx hoot <options>`
+
 ### Setup
 
 Run:
