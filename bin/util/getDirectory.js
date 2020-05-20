@@ -2,7 +2,7 @@ const { readdirSync } = require("fs")
 const { getDirectoryPath } = require("./getDirectoryPath")
 const { verifyDirectory } = require("./verifyDirectory")
 
-async function getDirectory (subfolder) {
+function getDirectory (subfolder) {
     try {
         verifyDirectory(subfolder)
         return readdirSync(getDirectoryPath(subfolder), { withFileTypes: true })

@@ -4,6 +4,7 @@ const { verifyCmd } = require("../../util/verifyCmd");
 const { getDirectoryPath } = require("../../util/getDirectoryPath");
 const { getGlobalPath } = require("../../util/getGlobalPath");
 const { askForDirectory } = require("../../util/askForDirectory");
+const { writeStatus, writeError } = require("../../util/messages")
 const dateFormat = require('dateformat');
 const chalk = require("chalk");
 const shell = require("shelljs");
@@ -16,7 +17,7 @@ async function makeHomework(name) {
   console.log(
     chalk.green(`Alright, let's make your homework called: ${name}`)
   );
-  let {date} = await inquirer.prompt([
+  let { date } = await inquirer.prompt([
     {
       type: 'datetime',
       name: 'date',
@@ -31,13 +32,12 @@ async function makeHomework(name) {
   let path = await askForDirectory(3, "piece of homework");
 
   if (await verifyDirectory(`${path}/Homework/${name}`, true)) {
-    console.log(
-      chalk.red("ERROR ") + chalk.blue("Homework already exists on file.")
-    );
+    writeError("Homework directory already exists on file")
     shell.exit(1);
   }
 
   await makeDirectory(`${path}/Homework/${name}`);
+
   console.log("Homework folder created.")
   let templateToCopy = await getGlobalPath(
     `/hoot-cli/templates/hoot-homework`
@@ -50,10 +50,13 @@ async function makeHomework(name) {
       if (err) {
         console.error(err);
       } else {
-        console.log("Copied " + "hoot-homework" + " folder");
+        writeStatus("Copied " + "hoot-homework" + " folder")
+
         shell.cd(getDirectoryPath(`${path}/Homework/${name}`));
-        console.log("Changed directories to assignment");
-        console.log("Initializing Git");
+
+        writeStatus("Changed directories to assignment");
+        writeStatus("Initializing Git");
+
         if (shell.exec("git init").code !== 0) {
           shell.echo("Error: Git init failed");
           shell.exit(1);
@@ -64,5 +67,5 @@ async function makeHomework(name) {
 }
 
 module.exports = {
-  makeHomework: makeHomework
+  makeHomework
 };

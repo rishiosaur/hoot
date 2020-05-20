@@ -1,28 +1,23 @@
 const { verifyDirectory } = require("../../util/verifyDirectory")
 const { makeDirectory } = require("../../util/makeDirectory")
-const { getDirectory } = require("../../util/getDirectory")
-const { writeFile } = require("fs");
+const { writeFileSync } = require("fs");
 const { getDirectoryPath } = require("../../util/getDirectoryPath")
 const { askForDirectory } = require("../../util/askForDirectory")
+const { writeError } = require("../../util/messages")
 const chalk = require("chalk")
 const shell = require("shelljs");
 const inquirer = require("inquirer")
 
-async function writeSubjectRC(subjectName, subjectType) {
-    let string =
-      "{\n" +
-      "'name':" +
-      subjectName +
-      ",\n" +
-      "'type':" +
-      subjectType +
-      ",\n" +
-      "}";
-    writeFile(getDirectoryPath(`${subjectName}/hoot.json`),
-      string,
-      err => console.log(err ? err : "")
-    );
+function writeSubjectRC(subjectName, subjectType) {
+  let rc = {
+    name: subjectName,
+    type: subjectType
   }
+    writeFileSync(getDirectoryPath(`${subjectName}/hoot.json`),
+      JSON.stringify(rc,null,2),
+      writeError
+    );
+}
 
 async function makeSubject(name) {
     if (!await verifyDirectory("", true)) {
@@ -30,22 +25,25 @@ async function makeSubject(name) {
       console.log(chalk.green("Try running ") + chalk.blue("hoot setup"));
       shell.exit(1)
     }
+
     let path = await askForDirectory(1,"subject")
-    let {subjectType} = await inquirer.prompt([
+
+    let { subjectType } = await inquirer.prompt([
       {
         type: "list",
-        name: "type",
+        name: "subjectType",
         message: "Type of subject",
-        choices: ["Computer Science", "Math"]
+        choices: ["Computer Science", "Math", "Literature", "Art"]
       }
     ]);
+
+    console.log(subjectType)
   
     if (await verifyDirectory(`${path}/${name}`, true)) {
-        console.log(
-          chalk.red("ERROR ") + chalk.blue("Subject already exists on file.")
-        );
+        writeError("This subject already exists on disk.")
         shell.exit(1)
     }
+    
     let writeConfirmation = await inquirer.prompt({
       type: "confirm",
       name: "confirm",

@@ -10,5 +10,5 @@ async function getGlobalPath(directory){
 }
 
 module.exports = {
-    getGlobalPath : getGlobalPath
+    getGlobalPath
 }
