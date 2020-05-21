@@ -5,7 +5,6 @@ The assignment tracking system for tech-savvy students.
 [![npm version](https://img.shields.io/npm/v/hoot-cli/latest?style=flat-square)](https://npmjs.org/package/hoot-cli "View this project on npm")
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/894a4dd7f89943e0899eb85dd1a8284a)](https://www.codacy.com/manual/rishiosaur/hoot-cli?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rishiosaur/hoot-cli&amp;utm_campaign=Badge_Grade)
 
-
 [![asciicast](https://asciinema.org/a/266563.svg)](https://asciinema.org/a/266563)
 
 ## Usage
@@ -24,6 +23,38 @@ Alternatively, you can run
 
 #### Setup
 If you have `hoot` installed locally, you can run `hoot setup`, or `npx hoot setup`.
+
+### Structure
+```
++----------------------------------------------+
+|                                              |
+|   School                                     |
+|    +                                         |
+|    |                                         |
+|    +--+ {Subject}                            |
+|             +                                |
+|             +-> {Unit}                       |
+|                  +                           |
+|                  |                           |
+|                  +-> Assignments             |
+|                  |      +                    |
+|                  |      +-> {Assignment}     |
+|                  |                           |
+|                  +-> Homework                |
+|                  |                           |
+|                  |                           |
+|                  |                           |
+|                  +-> Finished                |
+|                  |                           |
+|                  |                           |
+|                  +-> Notes                   |
+|                                              |
+|                                              |
+|  Folder Structure                            |
++----------------------------------------------+
+```
+
+Before creating assignments, you will need to create the associated units and subjects using the `hoot unit` and `hoot subject` commands, respectively.
 
 ### Subjects
 
