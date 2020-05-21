@@ -1,4 +1,3 @@
-const { getDirectory } = require("../../util/getDirectory");
 const { verifyDirectory } = require("../../util/verifyDirectory");
 const { makeDirectory } = require("../../util/makeDirectory");
 const { verifyCmd } = require("../../util/verifyCmd");
