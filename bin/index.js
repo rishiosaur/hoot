@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const program = require("commander");
+const { Command } = require("commander");
 const { makeAssignment }  = require("./commands/assignments/makeAssignment")
 const { makeSchool } = require("./commands/school/makeSchool")
 const { makeSubject } = require("./commands/subjects/makeSubject")
@@ -8,6 +8,11 @@ const { finishAssignment } = require("./commands/assignments/finishAssignment")
 const { viewItem } = require("./commands/utility/viewItem")
 const { makeUnit } = require("./commands/units/makeUnit")
 const { newItem } = require("./commands/utility/newItem")
+
+
+const program = new Command("hoot")
+
+program.version(require("../package.json").version);
 
 program
   .command("assignment <title>")
@@ -45,12 +50,13 @@ program
   .action(viewItem)
 
 program
-  .command("new")
+  .command("new <item> <name>")
   .alias("n")
   .description("Create a new assignment, subject, unit, note, or piece of homework.")
   .action(newItem)
 
 program.parse(process.argv);
 if (process.argv.length < 3) {
-  program.help();
+  makeSchool()
+  // program.help();
 }
