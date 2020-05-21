@@ -34,6 +34,7 @@
     "@babel/core": "^7.9.6",
     "@babel/preset-flow": "^7.9.0",
     "husky": "^4.2.5",
+    "jest": "^26.0.1",
     "precise-commits": "^1.0.2",
     "prettier": "^2.0.5"
   }
