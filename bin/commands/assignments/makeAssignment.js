@@ -27,7 +27,6 @@ async function makeAssignment(name) {
     chalk.green(`Alright, let's make your assignment called: ${name}`)
   );
 
-
   //
   // USER INPUTS
   //
@@ -78,11 +77,10 @@ async function makeAssignment(name) {
   writeFileSync(
     getDirectoryPath(`${path}/Assignments/${name}/hoot.json`),
 
-    JSON.stringify(assignmentRCJSON),
+    JSON.stringify(assignmentRCJSON, null, 2),
 
     (err) => {
       if (err) return write;
-      // console.log(JSON.stringify(assignmentRCJSON));
       writeStatus(
         "Writing to " +
         getDirectoryPath(`${path}/Assignments/${name}/hoot.json`)
@@ -147,5 +145,5 @@ async function makeAssignment(name) {
 }
 
 module.exports = {
-  makeAssignment: makeAssignment
+  makeAssignment
 };
