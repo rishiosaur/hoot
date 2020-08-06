@@ -1,10 +1,9 @@
 const { readFileSync } = require("fs");
 
-function getConfig () {
-    return readFileSync()
+const getConfig = async () => {
+    const config = await readFileSync("~/.hoot.json");
 }
 
 module.exports = {
-    getConfig,
-
+    getConfig
 }

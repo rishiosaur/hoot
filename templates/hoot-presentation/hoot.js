@@ -6,25 +6,6 @@ export default {
       secondary: '#ff006a',
       darkgray: '#333',
     },
-    // styles: {
-    //   root: {
-    //     textAlign: 'left',
-    //     contentAlign: 'left'
-    //   },
-    //   Slide: {
-    //     display: 'block',
-    //     padding: '1em',
-    //     textAlign: 'left',
-    //   },
-    //   pre: {
-    //     color: 'secondary',
-    //     bg: 'background',
-    //   },
-    //   a: {
-    //     color: 'secondary',
-    //     bg: 'secondary'
-    //   }
-    // },
     a: {
       color: '#00e6ff',
       bg: 'secondary'
