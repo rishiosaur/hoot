@@ -9,6 +9,7 @@ const { verifyDirectory } = require("./verifyDirectory")
  * @returns 
  */
 function getDirectory (subfolder) {
+    // TODO: Switch to promise.all
     try {
         verifyDirectory(subfolder)
         return readdirSync(getDirectoryPath(subfolder), { withFileTypes: true })

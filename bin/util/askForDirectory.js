@@ -1,4 +1,3 @@
-const { getDirectoryPath } = require("./getDirectoryPath");
 const { joinPath } = require("./joinPath");
 const { getDirectory } = require("./getDirectory");
 const { writeError } = require('../util/messages')
@@ -20,7 +19,8 @@ const askDirectoryName = (use) => (level) => (choices) => (
     name: "answer",
     message: `What ${level} is this ${use} in?`,
     choices: choices
-  }))
+}))
+
 /**
  * Asks the user for the path to a given directory through a series of questions.
  *
@@ -28,7 +28,7 @@ const askDirectoryName = (use) => (level) => (choices) => (
  * @param {string} use The place that this directory path will be used.
  * @returns
  */
-async function askForDirectoryPath(level, use) {
+async function askForDirectory(level, use) {
   // This is the path that everything gets pushed to; all of the custom directories go here.
   let finalPath = [];
 
@@ -47,7 +47,7 @@ async function askForDirectoryPath(level, use) {
   if (level > 1) {
     const subjectChoices = getDirectory(termChoice.answer);
 
-    if (subjectChoices.length == 0) {
+    if (subjectChoices.length === 0) {
       writeError(chalk.blue("You do not have any subjects. Try running ") +
         chalk.green("hoot new subject <name>"))
       shell.exit(1);
@@ -63,7 +63,7 @@ async function askForDirectoryPath(level, use) {
       joinPath(finalPath)
     );
 
-    if (unitChoices.filter(folder => folder != "Finished").length == 0) {
+    if (unitChoices.filter(folder => folder !== "Finished").length == 0) {
       writeError(chalk.blue("You do not have any units in this subject. Try running ") +
         chalk.green("hoot new unit <name>"));
       shell.exit(1);
@@ -82,7 +82,7 @@ async function askForDirectoryPath(level, use) {
       joinPath(finalPath)
     )
 
-    if (assignmentChoices.length == 0) {
+    if (assignmentChoices.length === 0) {
       writeError(chalk.blue("You do not have any subjects. Try running ") +
         chalk.green("hoot new subject <name>"))
       shell.exit(1);
@@ -93,10 +93,9 @@ async function askForDirectoryPath(level, use) {
     finalPath.push(assignmentChoice.answer);
   }
 
-  console.log(joinPath(finalPath))
   return joinPath(finalPath)
 }
 
 module.exports = {
-  askForDirectory: askForDirectoryPath
+  askForDirectory
 };
