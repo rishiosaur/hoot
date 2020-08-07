@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Want us to improve our software or event? Let us know here.
+about: Want us to improve Hoot? Let us know here.
 title: "[REQUEST] [Insert Title Here]"
 labels: enhancement
 assignees: ''
@@ -21,11 +21,8 @@ Add any other context, inspiration or screenshots about the request here.
 
 **Personal Info**
 
-What link do you have with Innovation Week?
+What's your connection to Hoot?
 
-- [ ] Student at GEMS SG (Not Participating in Events)
-- [ ] Student at GEMS SG (Participating in Events)
-- [ ] Teacher at GEMS SG 
-- [ ] Parent at GEMS SG (Not Participating in Events)
-- [ ] Parent at GEMS SG (Participating in Events)
-- [ ] Other: _________
+- [ ] Daily User
+- [ ] I use it sometimes
+- [ ] Never used it before
