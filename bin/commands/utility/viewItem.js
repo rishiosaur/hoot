@@ -20,11 +20,15 @@ async function viewItem() {
     )
     .stdout.split("\n")
     .slice(0, -1);
+
   sh.map(path => {
+
     let tempPath = path
       .replace(homedir + "/Documents", "")
       .substring(1)
       .split("/");
+    
+    // Colouring all the variants of directory structure
     tempPath.map((folder, index) => {
       if (index == 0) {
         tempPath[index] = chalk.blue(folder);
@@ -41,6 +45,7 @@ async function viewItem() {
       if(folder == "node_modules") {
         tempPath = ""
       }
+
     });
   tempPath.length > 0 ? console.log(tempPath.join("/")): ""
   return tempPath;

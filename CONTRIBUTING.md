@@ -4,30 +4,30 @@
 
 The following is a set of guidelines for contributing to the Hoot project.
 
-#### Table Of Contents
+## Table Of Contents
 
 [Code of Conduct](#code-of-conduct)
 
 [I don't want to read this whole thing, I just have a question!!!](#i-dont-want-to-read-this-whole-thing-i-just-have-a-question)
 
 [How Can I Contribute?](#how-can-i-contribute)
-  * [Reporting Bugs](#reporting-bugs)
-  * [Suggesting Enhancements](#suggesting-enhancements)
-  * [Pull Requests](#pull-requests)
+* [Reporting Bugs](#reporting-bugs)
+* [Suggesting Enhancements](#suggesting-enhancements)
+* [Pull Requests](#pull-requests)
 
-## Code of Conduct
+### Code of Conduct
 
 This project and everyone participating in it is governed by the [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
-## I don't want to read this whole thing I just have a question!!!
+### I don't want to read this whole thing I just have a question!!!
 
 Join us on the Hack Club Slack in the #hoot channel.
 
-## What should I know before I get started?
+### What should I know before I get started?
 
 Try out Hoot! Play around with it and have fun!
 
-## How Can I Contribute?
+## Helping Out
 
 ### Reporting Bugs
 
@@ -51,4 +51,4 @@ If you're fixing a pre-existing issue, comment on the issue to alert participant
 
 Begin by opening an issue using the relevant template, comment on the issue that you'll be working on it. Then once your coding is done, create a PR! We've got a template so please use that. 
 
-Thanks!!
+Thanks!
