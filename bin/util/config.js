@@ -5,6 +5,5 @@ const getConfig = async () => {
 }
 
 module.exports = {
-    getConfig,
-
+    getConfig
 }
