@@ -8,7 +8,7 @@ const { verifyDirectory } = require("./verifyDirectory")
  * @param {string | PathLike} subfolder The subfolder that is appended to the global directory
  * @returns 
  */
-function getDirectory (subfolder) {
+async function getDirectory (subfolder) {
     // TODO: Switch to promise.all
     try {
         verifyDirectory(subfolder)
