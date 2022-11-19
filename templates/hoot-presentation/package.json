@@ -9,7 +9,7 @@
   "devDependencies": {
     "code-surfer": "2.0.0-alpha.8",
     "css-loader": "^3.2.0",
-    "mdx-deck": "2.4.0",
+    "mdx-deck": "4.1.1",
     "raw-loader": "3.0.0"
   },
   "name": "my-deck",
